@@ -1,0 +1,1 @@
+{"arena":{"id":"day_arena","params":{}},"beats":[{"action":"trigger","t":1.0,"target":"destroyer"},{"action":"trigger","t":5.0,"target":"destroyer"}],"destroyer":{"id":"test_hand","params":{"position":[0,7.0,2.0]}},"display_name":"test_hand test","duration":9.0,"id":"test_hand_test","rosters":[{"count":12,"id":"test_ball","params":{}}]}
