@@ -66,8 +66,8 @@
 - **GATE-0 PASSED 2026-10-15 (jarvish):** spike rendered 60s 1080×1920
   @30fps, non-silent audio, wall_avg ≈65ms/frame on llvmpipe; MP4
   transcoded. Godot 4.6 Movie Maker confirmed as production path.
-- NEXT: Phase 1 — TASK-105 axe + slap-hand destroyers, TASK-106 first
-  brainrot archetype, TASK-107 CameraDirector.
+- NEXT: Phase 1 — TASK-106 first brainrot archetype (own name, 20–30%
+  geometry difference logged), TASK-107 CameraDirector.
   PENDING from him: kid-toy-spike.zip + Claude/Gemini chat docs + extra resources.
 - NO game code until he approves these docs.
 - **CORRECTION 2026-10-15 (his, after reading the review):** jarvish does

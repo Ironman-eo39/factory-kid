@@ -82,10 +82,12 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
   *Accept: drop test shows squash + face swap in screenshots — PASS
   2026-10-15 (dizzy+X-eyes at impact, happy restored after 2s; fixed a
   hub-parenting bug spotted in the render: hub local pos must be ZERO).*
-- [ ] **TASK-105** Destroyers: hammer DONE 2026-10-15 (`test_hammer`:
-  box + cylinder, kinematic, 0.6s anticipation → slam, trigger → slam →
-  squash + shake verified in render test); battle axe + slap hand remain.
-  *Accept: trigger → slam → squash + shake visible in render test.*
+- [x] **TASK-105** Destroyers: giant hammer (`test_hammer`), battle axe
+  (`test_axe`: twin blades, fast slam), slap hand (`test_hand`: palm +
+  fingers + thumb + wrist, deep thud) — all kinematic, 0.6s anticipation →
+  slam → squash + shake, procedural audio each.
+  *Accept: trigger → slam → squash + shake visible in render test — PASS
+  2026-10-15 (all three verified in real renders).*
 - [ ] **TASK-106** Character #1: primitive-built brainrot archetype (own
   name, 20–30% geometry difference logged), bob animation via tweens.
   *Accept: difference log written; preview.png approved by Urbish.*
