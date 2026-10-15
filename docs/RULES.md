@@ -30,8 +30,9 @@ Violate one → the phase's tests fail by definition.
 10. Rigid bodies ONLY. No soft-body, no cloth — ever.
 
 ## Legal & assets
-11. Characters: archetype + 20–30% geometry change + OWN names + no brand
-    marks. Keep a per-character difference log. (ADR-007)
+11. Characters: ~90% visual similarity to the reference archetype — his
+    explicit call, copyright handled by him. (ADR-007b; supersedes the old
+    20–30% rule)
 12. Audio: Suno chants live in `assets/chants/` isolated for swap-out;
     never ripped audio. (ADR-008)
 13. Kenney assets are CC0 — keep the license file with the assets.

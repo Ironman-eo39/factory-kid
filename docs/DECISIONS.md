@@ -92,6 +92,7 @@ randomly re-litigates them. Dated; supersede only by explicit Urbish override.
   exceed budget fail the smoke test.
 
 ## ADR-007 — Characters: archetype + 20–30% geometry change + own names (2026-10-15)
+- **Status: SUPERSEDED by ADR-007b below (2026-10-15, his explicit call).**
 - **Decision:** Brainrot archetypes (shark-with-sneakers vibe, log-warrior
   vibe) with deliberately changed silhouettes (20–30% geometry difference),
   our own names, no brand marks (no swoosh, no trademarked words).
@@ -103,6 +104,22 @@ randomly re-litigates them. Dated; supersede only by explicit Urbish override.
   by litigation evidence); 1:1 copies (never on the table).
 - **Consequences:** Character design needs deliberate differentiation
   passes; keep a per-character "difference log" for the compliance file.
+
+## ADR-007b — Characters: ~90% similarity, copyright is his call (2026-10-15)
+- **Decision:** Characters are built ~90% visually similar to their brainrot
+  reference archetypes. Copyright is handled by Urbish himself — his explicit
+  call ("my call if anything breaks thats on me"), same standing as the Suno
+  override (ADR-008). The 20–30% differentiation rule (ADR-007) is dropped.
+- **Reason:** The near-identical look IS the hook for this niche; he accepts
+  the legal risk personally and will handle any copyright issues himself.
+- **Rejected:** The cautious 20–30% differentiation (ADR-007 — superseded).
+- **Consequences:** Plonko (built 2026-10-15 to the old rule) gets remodeled
+  to ~90% reference similarity. Difference logs are retired; keep a short
+  per-character "reference note" naming the archetype instead.
+- **Two-phase plan (his call, 2026-10-15):** Phase 1 (now) — ~90% similarity
+  to get tried/tested/proven video concepts out fast. Phase 2 — after 2–3
+  concepts each cross 10K views on YouTube, characters get edited with our
+  own twist (differentiation pass at that point, not before).
 
 ## ADR-008 — Audio: Suno stays in (his override), with fallbacks (2026-10-15)
 - **Decision:** Suno-generated chants INCLUDED — Urbish explicitly takes the

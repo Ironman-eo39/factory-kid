@@ -77,3 +77,10 @@
   has time; it is never a gate and development never stops waiting for him.
   GATE-0 moved to jarvish. Docs updated: PRD/ARCHITECTURE/TASKS/TEST_PLAN/
   RULES/DECISIONS (ADR-003, ADR-011, ADR-013 rewritten).
+- **CHARACTER CALL 2026-10-15 (his, supersedes ADR-007):** characters built
+  ~90% visually similar to their brainrot reference archetypes; copyright
+  handled by Urbish himself ("my call if anything breaks thats on me") —
+  same standing as the Suno override. Two-phase plan: Phase 1 = 90% now to
+  get tried/tested/proven concepts out; Phase 2 = after 2–3 concepts each
+  cross 10K views on YouTube, characters get edited with our own twist.
+  Docs updated: PRD/DECISIONS (ADR-007b)/DESIGN/RULES/TASKS.

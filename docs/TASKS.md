@@ -89,10 +89,11 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
   *Accept: trigger → slam → squash + shake visible in render test — PASS
   2026-10-15 (all three verified in real renders).*
 - [x] **TASK-106** Character #1: `content/characters/plonko/` — "Plonko",
-  original wooden-log character (teal bands, stubby arms+feet, paddle club,
-  house-style happy face), idle bob+wobble tween, squash on destroyer hit.
-  DIFFERENCE_LOG.md documents 8 deliberate differences (well above the
-  20–30% floor); no names/marks copied. preview.png generated.
+  wooden-log character, idle bob+wobble tween, squash on destroyer hit.
+  Built 2026-10-15 to the old 20–30% rule (teal bands, paddle club,
+  DIFFERENCE_LOG.md) — **REMODEL PENDING: his 2026-10-15 call → ~90%
+  visual similarity to the reference archetype, copyright handled by him
+  (ADR-007b).** preview.png to be regenerated after remodel.
   *Accept: difference log written; preview.png generated 2026-10-15 —
   PASS (Urbish approval of preview.png pending).*
 - [x] **TASK-107** CameraDirector: `game/scripts/core/camera_director.gd`

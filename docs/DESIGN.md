@@ -26,10 +26,10 @@ game" instead of a clip-art collage.
 - Face swap: dizzy eyes for 2s after hard hits, then back to angry.
 - Moon-ball car #1: sphere body + 4 wheels, sphere collider.
 
-## Characters (legal line — see DECISIONS.md ADR-007)
-- Brainrot ARCHETYPE only (shark with sneakers, log warrior with bat):
-  keep the vibe, change the silhouette 20–30%, OUR OWN names, no brand marks
-  (no Nike hook, no trademarked words).
+## Characters (his call — see DECISIONS.md ADR-007b)
+- Brainrot references at ~90% visual similarity: keep the look that makes
+  the niche work (log warrior with bat, shark with sneakers, …). Copyright
+  is handled by Urbish himself.
 - Primitive-built (spheres/capsules/boxes), same flat style as cars.
 - Limbs as separate parts, swung with tweens — bobbing mascot, no skeleton.
 

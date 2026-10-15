@@ -47,8 +47,9 @@ in 90 days) with a variation-safe, monetizable series.
 - 5 Kenney Car Kit (CC0) cars incl. moon-ball car (sphere collider), candy
   recolors + cartoon face decals.
 - 3 primitive-built destroyers: giant hammer, axe, slap hand (CCD enabled).
-- 1 original brainrot-archetype mascot built from primitives (own name,
-  20–30% geometry difference from any known character, no brand marks).
+- 1 brainrot-style mascot built from primitives (~90% visual similarity to
+  its reference archetype — his explicit call, copyright handled by him;
+  ADR-007b).
 - 1 arena + staging UI (module browser, preset params, record button).
 - Movie Maker pipeline: `--write-movie` → AVI/MJPEG → ffmpeg → H.264 MP4.
 - Squash-on-impact tween + procedural impact sounds.
@@ -110,7 +111,7 @@ A producer (Urbish) should be able to:
 |---|---|
 | Godot Movie Maker fails the ASUS gate | Three.js+Rapier+CCapture fallback (spike both) |
 | Non-deterministic Jolt physics | Record multiple takes, pick the best (feature, not bug) |
-| Brainrot IP litigation spillover | Archetype + 20–30% geometry change + own names, no brand marks |
+| Brainrot IP / character similarity | His explicit call: ~90% similarity to reference archetypes; he handles copyright himself (ADR-007b, same standing as Suno ADR-008) |
 | Suno free-tier ToS on monetized channel | His explicit override; fallback to TikTok free-to-use / own voice |
 | Thermal throttling on ASUS | Offline rendering — throttling costs time, never ruins a take |
 | 1080p landscape panel | Never window-capture; vertical comes from offline render only |
