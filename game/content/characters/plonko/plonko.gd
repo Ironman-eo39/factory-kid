@@ -1,12 +1,13 @@
 extends RigidBody3D
-## plonko — brainrot-style log warrior (~90% reference similarity, ADR-007b).
+## plonko — brainrot-style log character (~90% reference similarity, ADR-007b).
+## Golden plank body, big-eyed smile, bat held down at his side.
 ## Copyright handled by Urbish (his explicit call). See REFERENCE_NOTE.md.
 ## Idle bob animation via looping tween; squash on destroyer hit.
 ## Content interface: apply_params / get_spawn_transforms / get_tags.
 
-const BARK := Color(0.55, 0.38, 0.22)
-const BARK_DARK := Color(0.4, 0.27, 0.15)
-const WOOD_LIGHT := Color(0.8, 0.62, 0.38)
+const GOLD := Color(0.79, 0.60, 0.20)
+const GOLD_DARK := Color(0.62, 0.45, 0.14)
+const WOOD_LIGHT := Color(0.88, 0.72, 0.38)
 
 var _tint: Color = Color(-1, -1, -1, -1)  # sentinel: apply_params may set before _ready
 var _visual: Node3D
@@ -14,19 +15,20 @@ var _visual: Node3D
 
 func _ready() -> void:
 	if _tint.r < 0.0:
-		_tint = BARK
+		_tint = GOLD
 	contact_monitor = true
 	max_contacts_reported = 4
+	angular_damp = 1.0
 	var pm := PhysicsMaterial.new()
 	pm.bounce = 0.35
 	pm.friction = 0.7
 	physics_material_override = pm
 	var cs := CollisionShape3D.new()
 	var cap := CapsuleShape3D.new()
-	cap.radius = 0.6
-	cap.height = 1.9
+	cap.radius = 0.62
+	cap.height = 2.6
 	cs.shape = cap
-	cs.position = Vector3(0, 0.15, 0)
+	cs.position = Vector3(0, -0.1, 0)
 	add_child(cs)
 	_visual = Node3D.new()
 	_visual.name = "Vis"
@@ -62,75 +64,87 @@ func _mat(c: Color) -> StandardMaterial3D:
 
 
 func _build_visual() -> void:
-	# log body — tapered bark cylinder
+	# plank body — wider than deep
 	var body := MeshInstance3D.new()
-	var cyl := CylinderMesh.new()
-	cyl.top_radius = 0.52
-	cyl.bottom_radius = 0.6
-	cyl.height = 1.7
-	cyl.radial_segments = 14
-	body.mesh = cyl
+	var bm := BoxMesh.new()
+	bm.size = Vector3(0.95, 1.75, 0.62)
+	body.mesh = bm
 	body.material_override = _mat(_tint)
 	body.position = Vector3(0, 0.15, 0)
 	_visual.add_child(body)
-	# cut-wood top (growth-ring cap)
+	# cut-wood top cap
 	var cap_top := MeshInstance3D.new()
-	var ctm := CylinderMesh.new()
-	ctm.top_radius = 0.53
-	ctm.bottom_radius = 0.53
-	ctm.height = 0.08
-	ctm.radial_segments = 14
+	var ctm := BoxMesh.new()
+	ctm.size = Vector3(0.97, 0.08, 0.64)
 	cap_top.mesh = ctm
 	cap_top.material_override = _mat(WOOD_LIGHT)
-	cap_top.position = Vector3(0, 1.02, 0)
+	cap_top.position = Vector3(0, 1.05, 0)
 	_visual.add_child(cap_top)
-	# dark base ring
-	var base := MeshInstance3D.new()
-	var bm := CylinderMesh.new()
-	bm.top_radius = 0.6
-	bm.bottom_radius = 0.6
-	bm.height = 0.1
-	bm.radial_segments = 14
-	base.mesh = bm
-	base.material_override = _mat(BARK_DARK)
-	base.position = Vector3(0, -0.72, 0)
-	_visual.add_child(base)
-	# arms angled inward to grip the bat
+	# ear nubs
+	for sx in [-1.0, 1.0]:
+		var ear := MeshInstance3D.new()
+		var em := SphereMesh.new()
+		em.radius = 0.12
+		em.height = 0.24
+		ear.mesh = em
+		ear.material_override = _mat(GOLD_DARK)
+		ear.position = Vector3(sx * 0.5, 0.75, 0)
+		_visual.add_child(ear)
+	# long thin arms hanging at the sides
 	for sx in [-1.0, 1.0]:
 		var arm := MeshInstance3D.new()
 		var am := CylinderMesh.new()
-		am.top_radius = 0.12
-		am.bottom_radius = 0.14
-		am.height = 0.6
+		am.top_radius = 0.09
+		am.bottom_radius = 0.11
+		am.height = 1.0
 		am.radial_segments = 8
 		arm.mesh = am
-		arm.material_override = _mat(BARK_DARK)
-		arm.position = Vector3(sx * 0.62, 0.35, 0.2)
-		arm.rotation_degrees = Vector3(0, 0, sx * -50.0)
+		arm.material_override = _mat(_tint)
+		arm.position = Vector3(sx * 0.58, -0.15, 0)
+		arm.rotation_degrees = Vector3(0, 0, sx * -8.0)
 		_visual.add_child(arm)
-	# feet
+		var hand := MeshInstance3D.new()
+		var hm := SphereMesh.new()
+		hm.radius = 0.13
+		hm.height = 0.26
+		hand.mesh = hm
+		hand.material_override = _mat(_tint)
+		hand.position = Vector3(sx * 0.64, -0.68, 0)
+		_visual.add_child(hand)
+	# thin legs + feet
 	for sx in [-1.0, 1.0]:
+		var leg := MeshInstance3D.new()
+		var lm := CylinderMesh.new()
+		lm.top_radius = 0.1
+		lm.bottom_radius = 0.1
+		lm.height = 0.5
+		lm.radial_segments = 8
+		leg.mesh = lm
+		leg.material_override = _mat(_tint)
+		leg.position = Vector3(sx * 0.22, -0.95, 0)
+		_visual.add_child(leg)
 		var foot := MeshInstance3D.new()
 		var fm := SphereMesh.new()
-		fm.radius = 0.2
-		fm.height = 0.4
+		fm.radius = 0.16
+		fm.height = 0.2
 		foot.mesh = fm
-		foot.material_override = _mat(BARK_DARK)
-		foot.position = Vector3(sx * 0.28, -0.78, 0.12)
+		foot.material_override = _mat(GOLD_DARK)
+		foot.position = Vector3(sx * 0.22, -1.22, 0.05)
+		foot.scale = Vector3(1.0, 0.6, 1.2)
 		_visual.add_child(foot)
-	# baseball bat — tapered, held diagonal across the body
+	# baseball bat held DOWN in the right hand
 	var club := Node3D.new()
 	club.position = Vector3(0.5, 0.05, 0.3)
 	club.rotation_degrees = Vector3(0, 0, -45)
 	_visual.add_child(club)
 	var handle := MeshInstance3D.new()
-	var hm := CylinderMesh.new()
-	hm.top_radius = 0.075
-	hm.bottom_radius = 0.075
-	hm.height = 0.6
-	hm.radial_segments = 8
-	handle.mesh = hm
-	handle.material_override = _mat(BARK_DARK)
+	var ham := CylinderMesh.new()
+	ham.top_radius = 0.07
+	ham.bottom_radius = 0.07
+	ham.height = 0.6
+	ham.radial_segments = 8
+	handle.mesh = ham
+	handle.material_override = _mat(GOLD_DARK)
 	handle.position = Vector3(0, -0.15, 0)
 	club.add_child(handle)
 	var knob := MeshInstance3D.new()
@@ -138,7 +152,7 @@ func _build_visual() -> void:
 	km.radius = 0.1
 	km.height = 0.2
 	knob.mesh = km
-	knob.material_override = _mat(BARK_DARK)
+	knob.material_override = _mat(GOLD_DARK)
 	knob.position = Vector3(0, -0.48, 0)
 	club.add_child(knob)
 	var barrel := MeshInstance3D.new()
@@ -151,19 +165,19 @@ func _build_visual() -> void:
 	barrel.material_override = _mat(WOOD_LIGHT)
 	barrel.position = Vector3(0, 0.6, 0)
 	club.add_child(barrel)
-	# stern face decal (reference look)
+	# big-eyed smile face decal
 	var face := MeshInstance3D.new()
 	var quad := QuadMesh.new()
-	quad.size = Vector2(0.9, 0.9)
+	quad.size = Vector2(0.85, 0.85)
 	face.mesh = quad
 	var fmat := StandardMaterial3D.new()
 	fmat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	fmat.albedo_texture = FaceDecal.make_texture("angry")
+	fmat.albedo_texture = FaceDecal.make_texture("tung")
 	fmat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	fmat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 	fmat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	face.material_override = fmat
-	face.position = Vector3(0, 0.45, 0.56)
+	face.position = Vector3(0, 0.55, 0.42)
 	_visual.add_child(face)
 
 

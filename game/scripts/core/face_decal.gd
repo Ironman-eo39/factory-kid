@@ -1,7 +1,7 @@
 class_name FaceDecal
 extends RefCounted
 ## Procedural cartoon-face textures for the face-decal quad.
-## Expressions: "happy" (default), "angry", "dizzy".
+## Expressions: "happy" (default), "angry", "dizzy", "tung" (big-eyed smile).
 ## 128x128 RGBA; white kept transparent via material alpha.
 
 
@@ -21,10 +21,26 @@ static func make_texture(expression: String) -> ImageTexture:
 		"dizzy":
 			_x_eyes(img)
 			_circle_outline(img, 64, 96, 11, 6, INK)
+		"tung":
+			_tung_face(img)
 		_:
 			_eyes(img)
 			_smile(img)
 	return ImageTexture.create_from_image(img)
+
+
+static func _tung_face(img: Image) -> void:
+	# huge close-set eyes, long nose, wide friendly smile
+	for cx in [50, 78]:
+		_circle_fill(img, cx, 42, 20, WHITE)
+		_circle_fill(img, cx, 46, 10, INK)
+		_circle_fill(img, cx - 4, 42, 4, WHITE)
+	_line(img, 64, 56, 64, 78, 6, INK)
+	for deg in range(15, 166, 2):
+		var rad := deg_to_rad(float(deg))
+		var x := int(64.0 + 32.0 * cos(rad))
+		var y := int(66.0 + 32.0 * sin(rad))
+		_circle_fill(img, x, y, 4, INK)
 
 
 static func _eyes(img: Image) -> void:
