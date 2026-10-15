@@ -1,0 +1,30 @@
+; Engine configuration file.
+; KidToyFactory — internal content factory (Godot 4.6, Jolt, Compatibility renderer).
+
+config_version=5
+
+[application]
+
+config/name="KidToyFactory"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+
+[autoload]
+
+ContentRegistry="*res://scripts/core/content_registry.gd"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+common/physics_ticks_per_second=60
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
