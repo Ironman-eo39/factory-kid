@@ -15,6 +15,7 @@ var _beats: Array = []
 var _fired: Array = []
 var _duration := 8.0
 var _destroyer: Node = null
+var _first_cast: Node3D = null
 
 
 func _ready() -> void:
@@ -30,8 +31,14 @@ func _ready() -> void:
 	_preset = parsed
 	_duration = float(_preset.get("duration", 8.0))
 	_assemble()
+	_wire_camera()
 	_beats = _preset.get("beats", [])
 	print("[runner] preset=%s duration=%.1f beats=%d" % [preset_path, _duration, _beats.size()])
+
+func _wire_camera() -> void:
+	var dir := get_tree().get_first_node_in_group("camera_director")
+	if dir != null and dir.has_method("configure"):
+		dir.configure(_preset.get("camera", {}), {"destroyer": _destroyer, "cast": _first_cast})
 
 
 func _assemble() -> void:
@@ -61,6 +68,8 @@ func _assemble() -> void:
 			var b := ContentRegistry.spawn(str(roster.get("id", "")), p, self)
 			if b != null:
 				b.position = positions[i] + offset
+				if _first_cast == null:
+					_first_cast = b
 
 
 ## Preset JSON carries Vector3s as [x, y, z] arrays — normalize once here

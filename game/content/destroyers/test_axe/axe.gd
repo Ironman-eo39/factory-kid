@@ -16,7 +16,6 @@ const T_RETURN := 1.0
 
 var h_state: int = AxeState.IDLE
 var h_t := 0.0
-var shake := 0.0
 
 
 func _ready() -> void:
@@ -114,7 +113,7 @@ func _physics_process(delta: float) -> void:
 			if h_t >= T_SLAM:
 				h_state = AxeState.HOLD
 				h_t = 0.0
-				shake = 0.5
+				_cam_shake(0.55)
 				_boom()
 		AxeState.HOLD:
 			y = H_LOW
@@ -128,17 +127,6 @@ func _physics_process(delta: float) -> void:
 				h_state = AxeState.IDLE
 				y = H_REST
 	position.y = y
-	if shake > 0.0:
-		shake = maxf(0.0, shake - delta * 1.4)
-		var cam := get_viewport().get_camera_3d()
-		if cam != null:
-			cam.h_offset = randf_range(-1.0, 1.0) * shake * 12.0
-			cam.v_offset = randf_range(-1.0, 1.0) * shake * 12.0
-			if shake <= 0.0:
-				cam.h_offset = 0.0
-				cam.v_offset = 0.0
-
-
 func _whistle() -> void:
 	var sr := 22050
 	var n := int(sr * T_WIND)
@@ -180,3 +168,8 @@ func _play(data: PackedByteArray, sr: int) -> void:
 	add_child(p)
 	p.play()
 	p.finished.connect(p.queue_free)
+
+func _cam_shake(amount: float) -> void:
+	var cam := get_viewport().get_camera_3d()
+	if cam != null and cam.has_method("add_shake"):
+		cam.add_shake(amount)

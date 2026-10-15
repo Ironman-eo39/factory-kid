@@ -11,8 +11,6 @@ const H_LOW := 0.9
 
 var h_state: HammerState = HammerState.IDLE
 var h_t := 0.0
-var shake := 0.0
-var cam: Camera3D
 var sfx_boom: AudioStreamPlayer
 var sfx_whistle: AudioStreamPlayer
 
@@ -47,8 +45,6 @@ func _ready() -> void:
 	sfx_whistle = AudioStreamPlayer.new()
 	sfx_whistle.stream = _make_whistle()
 	add_child(sfx_whistle)
-	# camera is a sibling (arena builds it); find lazily on first shake
-	cam = get_viewport().get_camera_3d()
 
 
 func apply_params(params: Dictionary) -> void:
@@ -99,7 +95,7 @@ func _physics_process(delta: float) -> void:
 				h_state = HammerState.HOLD
 				h_t = 0.0
 				sfx_boom.play()
-				shake = 1.0
+				_cam_shake(0.55)
 		HammerState.HOLD:
 			h_t += delta
 			if h_t >= 0.5:
@@ -112,18 +108,6 @@ func _physics_process(delta: float) -> void:
 			if k >= 1.0:
 				h_state = HammerState.IDLE
 	position.y = y
-	if shake > 0.0:
-		if cam == null or not is_instance_valid(cam):
-			cam = get_viewport().get_camera_3d()
-		if cam != null:
-			cam.h_offset = randf_range(-1.0, 1.0) * shake * 0.35
-			cam.v_offset = randf_range(-1.0, 1.0) * shake * 0.35
-		shake = maxf(0.0, shake - delta * 4.0)
-	elif cam != null and is_instance_valid(cam):
-		cam.h_offset = 0.0
-		cam.v_offset = 0.0
-
-
 # ---------- procedural audio ----------
 
 func _wav(data: PackedByteArray, rate: int) -> AudioStreamWAV:
@@ -163,3 +147,8 @@ func _make_whistle() -> AudioStreamWAV:
 		var s := sin(phase) * sin(PI * t) * 0.4
 		data.encode_s16(i * 2, int(clampf(s, -1.0, 1.0) * 30000.0))
 	return _wav(data, rate)
+
+func _cam_shake(amount: float) -> void:
+	var cam := get_viewport().get_camera_3d()
+	if cam != null and cam.has_method("add_shake"):
+		cam.add_shake(amount)

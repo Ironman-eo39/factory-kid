@@ -83,8 +83,9 @@ func _build_ground() -> void:
 
 
 func _build_camera() -> void:
-	var cam := Camera3D.new()
+	var cam := CameraDirector.new()
 	cam.name = "ArenaCam"
+	cam.add_to_group("camera_director")
 	cam.keep_aspect = Camera3D.KEEP_WIDTH
 	cam.fov = 60.0
 	cam.position = Vector3(0, 8.5, 10.0)
