@@ -27,7 +27,9 @@ func _on_frame() -> void:
 	frames += 1
 	if frames == 90:
 		var img := root.get_texture().get_image()
-		var path := "/home/urbish/kid-toy-factory/tests/render/smoke0.png"
+		var path := OS.get_environment("RENDER_OUT_PNG")
+		if path == "":
+			path = "/home/urbish/kid-toy-factory/tests/render/smoke0.png"
 		var err := img.save_png(path)
 		print("SMOKE saved png err=", err, " size=", img.get_size())
 		quit()
