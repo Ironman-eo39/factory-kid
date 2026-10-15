@@ -76,9 +76,12 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
   *Accept: 5 car modules under content/vehicles/, all lint green — PASS
   2026-10-15 (manifest_check 8/8, tri_lint 0 over budget; showcase render
   verified: candy colors, all 3 faces, hammer smash flips/scatters cars).*
-- [ ] **TASK-104** Moon-ball car: sphere body + 4 wheels, sphere collider,
-  squash tween hook, dizzy-face swap on hard hit (2s).
-  *Accept: drop test shows squash + face swap in screenshots.*
+- [x] **TASK-104** Moon-ball car: `content/vehicles/moon_ball/` — sphere
+  body + 4 spinning wheels with hubs, sphere collider, cartoon face;
+  hard hits (>7 m/s) swap face to dizzy for 2s + squash tween, then revert.
+  *Accept: drop test shows squash + face swap in screenshots — PASS
+  2026-10-15 (dizzy+X-eyes at impact, happy restored after 2s; fixed a
+  hub-parenting bug spotted in the render: hub local pos must be ZERO).*
 - [ ] **TASK-105** Destroyers: hammer DONE 2026-10-15 (`test_hammer`:
   box + cylinder, kinematic, 0.6s anticipation → slam, trigger → slam →
   squash + shake verified in render test); battle axe + slap hand remain.
