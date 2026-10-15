@@ -1,1 +1,35 @@
-{"arena": {"id": "day_arena", "params": {}}, "beats": [{"action": "trigger", "t": 1.0, "target": "destroyer"}], "destroyer": {"id": "test_hammer", "params": {"position": [0, 7.0, -4.0]}}, "display_name": "Quick test (12 balls, 8s)", "duration": 8.0, "id": "quick_test", "rosters": [{"count": 12, "id": "test_ball", "params": {}}]}
+{
+ "arena": {
+  "id": "day_arena",
+  "params": {}
+ },
+ "beats": [
+  {
+   "action": "trigger",
+   "t": 1.0,
+   "target": "destroyer"
+  }
+ ],
+ "destroyer": {
+  "id": "test_hammer",
+  "params": {
+   "position": [
+    0,
+    7.0,
+    -4.0
+   ]
+  }
+ },
+ "display_name": "Quick test (12 balls, 8s)",
+ "duration": 8.0,
+ "id": "quick_test",
+ "rosters": [
+  {
+   "count": 12,
+   "id": "test_ball",
+   "params": {}
+  }
+ ],
+ "version": 2,
+ "seed": 86473
+}

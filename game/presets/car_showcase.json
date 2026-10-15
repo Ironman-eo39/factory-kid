@@ -1,1 +1,84 @@
-{"arena":{"id":"day_arena","params":{}},"beats":[{"action":"trigger","t":2.0,"target":"destroyer"}],"destroyer":{"id":"test_hammer","params":{"position":[0,7.0,-4.0]}},"display_name":"Car showcase (5 Kenney cars, 12s)","duration":12.0,"id":"car_showcase","rosters":[{"count":1,"id":"sedan","offset":[-5.2,0.6,-4.0],"params":{}},{"count":1,"id":"suv","offset":[-2.6,0.6,-4.0],"params":{"expression":"angry"}},{"count":1,"id":"hatchback_sports","offset":[0,0.6,-4.0],"params":{}},{"count":1,"id":"race_car","offset":[2.6,0.6,-4.0],"params":{"expression":"dizzy"}},{"count":1,"id":"taxi","offset":[5.2,0.6,-4.0],"params":{}}]}
+{
+ "arena": {
+  "id": "day_arena",
+  "params": {}
+ },
+ "beats": [
+  {
+   "action": "trigger",
+   "t": 2.0,
+   "target": "destroyer"
+  }
+ ],
+ "destroyer": {
+  "id": "test_hammer",
+  "params": {
+   "position": [
+    0,
+    7.0,
+    -4.0
+   ]
+  }
+ },
+ "display_name": "Car showcase (5 Kenney cars, 12s)",
+ "duration": 12.0,
+ "id": "car_showcase",
+ "rosters": [
+  {
+   "count": 1,
+   "id": "sedan",
+   "offset": [
+    -5.2,
+    0.6,
+    -4.0
+   ],
+   "params": {}
+  },
+  {
+   "count": 1,
+   "id": "suv",
+   "offset": [
+    -2.6,
+    0.6,
+    -4.0
+   ],
+   "params": {
+    "expression": "angry"
+   }
+  },
+  {
+   "count": 1,
+   "id": "hatchback_sports",
+   "offset": [
+    0,
+    0.6,
+    -4.0
+   ],
+   "params": {}
+  },
+  {
+   "count": 1,
+   "id": "race_car",
+   "offset": [
+    2.6,
+    0.6,
+    -4.0
+   ],
+   "params": {
+    "expression": "dizzy"
+   }
+  },
+  {
+   "count": 1,
+   "id": "taxi",
+   "offset": [
+    5.2,
+    0.6,
+    -4.0
+   ],
+   "params": {}
+  }
+ ],
+ "version": 2,
+ "seed": 25745
+}

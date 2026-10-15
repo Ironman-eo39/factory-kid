@@ -1,1 +1,39 @@
-{"arena":{"id":"day_arena","params":{}},"beats":[{"action":"trigger","t":1.0,"target":"destroyer"}],"destroyer":{"id":"test_hammer","params":{"position":[0,7.0,2.0]}},"display_name":"Music test (10s)","duration":10.0,"id":"music_test","music":{"chant":"res://audio/chant_placeholder.wav","volume_db":-10.0},"rosters":[{"count":6,"id":"test_ball","params":{}}]}
+{
+ "arena": {
+  "id": "day_arena",
+  "params": {}
+ },
+ "beats": [
+  {
+   "action": "trigger",
+   "t": 1.0,
+   "target": "destroyer"
+  }
+ ],
+ "destroyer": {
+  "id": "test_hammer",
+  "params": {
+   "position": [
+    0,
+    7.0,
+    2.0
+   ]
+  }
+ },
+ "display_name": "Music test (10s)",
+ "duration": 10.0,
+ "id": "music_test",
+ "music": {
+  "chant": "res://audio/chant_placeholder.wav",
+  "volume_db": -10.0
+ },
+ "rosters": [
+  {
+   "count": 6,
+   "id": "test_ball",
+   "params": {}
+  }
+ ],
+ "version": 2,
+ "seed": 16462
+}

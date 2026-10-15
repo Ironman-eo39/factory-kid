@@ -3,6 +3,7 @@ extends Node3D
 ## modules via ContentRegistry, fires timeline beats, quits at the end.
 ## Usage: godot --path game -- --preset=res://presets/quick_test.json
 ## A new video = a new JSON file. No code changes (RULES #6, ADR-004).
+## Schema v2: adds "version", "seed", "camera.path", "overlays".
 
 const PALETTE: Array[Color] = [
 	Color(1, 0.2, 0.3), Color(0.2, 0.8, 0.3), Color(0.2, 0.4, 1.0), Color(1, 0.85, 0.1),
@@ -30,11 +31,51 @@ func _ready() -> void:
 		return
 	_preset = parsed
 	_duration = float(_preset.get("duration", 8.0))
+	if _preset.has("seed"):
+		seed(int(_preset["seed"]))
+		print("[runner] seed=%d" % int(_preset["seed"]))
 	_assemble()
 	_wire_camera()
 	_wire_music()
+	_setup_overlays()
 	_beats = _preset.get("beats", [])
 	print("[runner] preset=%s duration=%.1f beats=%d" % [preset_path, _duration, _beats.size()])
+
+var _overlays: Array = []
+var _overlay_layer: CanvasLayer = null
+
+func _setup_overlays() -> void:
+	_overlays = _preset.get("overlays", [])
+	if _overlays.is_empty():
+		return
+	_overlay_layer = CanvasLayer.new()
+	_overlay_layer.layer = 10
+	add_child(_overlay_layer)
+	for ov in _overlays:
+		var o: Dictionary = ov
+		var lbl := Label.new()
+		lbl.text = str(o.get("text", ""))
+		lbl.visible = false
+		# 1080x1920 portrait: big bold centered text
+		lbl.add_theme_font_size_override("font_size", int(o.get("size", 72)))
+		lbl.add_theme_color_override("font_color", Color(1, 1, 1))
+		lbl.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+		lbl.add_theme_constant_override("outline_size", 12)
+		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		lbl.position = Vector2(140, float(o.get("y", 400)))
+		lbl.size = Vector2(800, 200)
+		_overlay_layer.add_child(lbl)
+		o["_node"] = lbl
+
+func _update_overlays() -> void:
+	for ov in _overlays:
+		var o: Dictionary = ov
+		var lbl: Label = o.get("_node")
+		if lbl == null:
+			continue
+		var t0 := float(o.get("t", 0.0))
+		var dur := float(o.get("duration", 2.0))
+		lbl.visible = _t >= t0 and _t < t0 + dur
 
 func _wire_music() -> void:
 	var m: Dictionary = _preset.get("music", {})
@@ -109,6 +150,7 @@ func _physics_process(delta: float) -> void:
 		if _t >= float(beat.get("t", 0.0)):
 			_fired.append(bi)
 			_fire_beat(beat)
+	_update_overlays()
 	if _t >= _duration:
 		get_tree().quit()
 
