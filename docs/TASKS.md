@@ -2,7 +2,8 @@
 
 One task at a time (playbook §2.2). A task is done when its acceptance
 criteria pass AND the tests in TEST_PLAN.md for that phase are green AND
-TASKS.md + MEMORY.md are updated. Urbish tests each phase on his laptop.
+TASKS.md + MEMORY.md are updated. All testing and rendering happens on
+jarvish; the ASUS check (TASK-901) is async and never blocks.
 
 ## Phase 0 — Infra + capture gate (BEFORE any game code)
 
@@ -19,10 +20,14 @@ TASKS.md + MEMORY.md are updated. Urbish tests each phase on his laptop.
 - [ ] **TASK-004** Test harness: GUT wired for `tests/unit/`; render smoke
   test runner (scene → scripted input → screenshots) in `tests/render/`.
   *Accept: a dummy scene passes the full harness end to end.*
-- [ ] **GATE-0** Spike on the ASUS: unzip `kid-toy-spike.zip`, run
-  `record.bat`. *Pass: one clean 60s 1080×1920 @30fps clip, non-silent
-  audio, `wall_avg` reported.* **Fail → fix capture before any game code.**
-  (Parallel option: Three.js+Rapier+CCapture spike if Godot fails.)
+- [ ] **GATE-0** Capture spike on **jarvish**: unzip `kid-toy-spike.zip`
+  (when he sends it), run the record script under Xvfb. *Pass: one clean
+  60s 1080×1920 @30fps clip, non-silent audio, `wall_avg` reported.*
+  **Fail → fix capture before any game code.** (Parallel option:
+  Three.js+Rapier+CCapture spike if Godot fails.)
+- [ ] **TASK-901** ASUS confirmation (NON-BLOCKING, whenever he has time):
+  copy a build to the ASUS, stage → record → MP4. *Pass: works there too —
+  expected, since jarvish is the weaker machine.* Never blocks development.
 
 ## Phase 1 — Toy core (vertical slices, one at a time)
 
@@ -58,9 +63,10 @@ TASKS.md + MEMORY.md are updated. Urbish tests each phase on his laptop.
 - [ ] **TASK-110** Staging UI: design-first mockup (HTML, shown in chat,
   recorded as video) → Godot UI (module browser, preset editor, record
   button). *Accept: Urbish stages a scenario in <2 min (timed).*
-- [ ] **GATE-1** His playtest on the ASUS: stage → record → MP4, plus
+- [ ] **GATE-1** jarvish playtest: stage → record → MP4, plus
   module-drop test (new folder → registry picks it up, no core edits).
-  *Pass: all green + his explicit approval.*
+  *Pass: all green.* His ASUS confirmation (TASK-901) runs async and never
+  blocks the gate.
 
 ## Phase 1.5 — Variation system (the monetization line)
 
@@ -86,7 +92,7 @@ TASKS.md + MEMORY.md are updated. Urbish tests each phase on his laptop.
 
 ## Phase 3 — Validation
 
-- [ ] **TASK-301** Render 5 differentiated scenes (overnight batch on ASUS).
+- [ ] **TASK-301** Render 5 differentiated scenes (overnight batch on jarvish).
 - [ ] **TASK-302** Urbish edits in CapCut (text overlays, cuts, sound layer).
 - [ ] **TASK-303** Publish 15–20 videos across Shorts/Reels/TikTok.
 - [ ] **TASK-304** Read retention at 48h/7d.

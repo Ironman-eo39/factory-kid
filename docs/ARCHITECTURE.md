@@ -70,13 +70,16 @@ button.
   slot). Every output video must differ on ≥4 axes (DESIGN.md).
 - **Recorder** — wraps Movie Maker: builds the godot CLI invocation,
   verifies output resolution/audio/wall_avg, calls the ffmpeg transcode
-  script. Single entry point: `tools/record.sh preset.json`.
+  script. Single entry point: `tools/record.sh preset.json`. Runs on
+  jarvish (Xvfb + opengl3 when no display).
 - **CameraDirector** — wide / dramatic-low / follow-chase presets,
   impulse-scaled screen shake, per-beat cuts defined in the preset.
 - **AudioSynth** — procedural impacts (boing/crash/splat/whistle) scaled by
   impulse; mixer buses: SFX / Chants / Music. Chant WAVs imported per preset.
-- **BatchQueue** — `queue.json` → sequential renders (overnight on the
-  ASUS; Xvfb+llvmpipe smoke renders on jarvish) → ffmpeg → done folder.
+- **BatchQueue** — `queue.json` → sequential renders on jarvish (overnight;
+  Xvfb+llvmpipe/opengl3 headless) → ffmpeg → done folder. The ASUS is not
+  in the render path; it gets an async confirmation build whenever he has
+  time (TASK-901, non-blocking).
 
 ## Project layout (jarvish: `~/kid-toy-factory/`)
 ```

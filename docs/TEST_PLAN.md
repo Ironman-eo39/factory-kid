@@ -28,16 +28,16 @@ The "actual UI-based interaction" layer:
   UI usable at each step.
 - Any visual defect → structured bug report (RULES), root-cause first.
 
-## Level 4 — Recorded-clip verification (ASUS, per phase)
+## Level 4 — Recorded-clip verification (jarvish, per phase)
 - `tools/record.sh` output checked automatically: resolution exactly
   1080×1920, 30fps, non-silent audio track, `wall_avg` logged.
-- Urbish watches the clip: hook in first 2s? faces readable? comedy
-  timing right? His approval is the gate.
+- Muse watches the clip (extract frames): hook in first 2s? faces
+  readable? comedy timing right? Visual sign-off here.
 
-## Level 5 — His manual playtest (ASUS, end of every phase)
-Per the playbook: he runs the build himself on his laptop. Staging speed
-(<2 min to a render), module-drop test (new folder, no core edits), and
-general feel. His explicit approval closes the phase.
+## Level 5 — ASUS confirmation (non-blocking, whenever he has time)
+TASK-901: he copies a build to the ASUS and stage → record → MP4s himself.
+Expected to pass (jarvish is the weaker machine). This NEVER blocks a
+phase — phases close on jarvish results.
 
 ## Regression policy
 Every fixed bug gets a test (unit or render) that would have caught it.
@@ -45,5 +45,5 @@ Every fixed bug gets a test (unit or render) that would have caught it.
 phase pass.
 
 ## Perf regression
-`wall_avg` per rendered second is logged per phase. If it regresses >20%
-between phases, stop and profile before adding features.
+`wall_avg` per rendered second is logged per phase (measured on jarvish).
+If it regresses >20% between phases, stop and profile before adding features.

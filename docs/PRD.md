@@ -66,33 +66,42 @@ in 90 days) with a variation-safe, monetizable series.
 ## Success Criteria
 A producer (Urbish) should be able to:
 1. Open the staging UI, pick a scenario preset, and start an offline render
-   in under 2 minutes.
+   in under 2 minutes (on jarvish).
 2. Get a finished 1080×1920 @30fps H.264 clip with non-silent audio,
-   with zero dropped frames by construction.
+   with zero dropped frames by construction (rendered on jarvish).
 3. Add a brand-new character/obstacle/arena by dropping in a module folder
    — no core code edits, verified by a registry self-test.
 4. Produce 3 videos that look and feel like different episodes, not the
    same template.
-5. Render a finished video end-to-end in <12 minutes on the ASUS.
+5. Render a finished video end-to-end in <12 minutes on jarvish (ASUS will
+   be faster).
 
 ## Hard Gates
-- **Phase 0 gate:** Claude's spike `record.bat` runs on the ASUS → one clean
-  60s 1080×1920 @30fps clip with audio + reported `wall_avg`. No gate pass =
-  no game code (fix capture first).
+- **Phase 0 gate:** capture spike runs on **jarvish** → one clean 60s
+  1080×1920 @30fps clip with audio + reported `wall_avg`. No gate pass =
+  no game code (fix capture first). The ASUS is NOT a gate — see below.
+- **Machine strategy (his correction, 2026-10-15):** jarvish does build +
+  test + rendering, ALL of it. jarvish (i5-7300U, HD 620) is the weaker
+  machine — if it runs there, it of course runs on the ASUS. The ASUS gets
+  a non-blocking confirmation test whenever he has time; development never
+  stops waiting for him.
 - **Phase 3 gate:** 15–20 videos published, 48h/7d retention checked. Any one
   video >10K views → scale to Phase 4. Otherwise: diagnose or park.
 
 ## Constraints
 - $0 budget. No paid tools, services, or subscriptions.
-- Target render machine: ASUS ZenBook Flip 13 (i5-1135G7, Iris Xe shared
-  memory, 8GB RAM, 1080p landscape panel, Windows 11).
-- Build machine: Linux laptop `jarvish` (i5-7300U, 16GB RAM, Intel HD 620,
-  158GB free) — holds ALL build files; daily backup to Muse VM.
+- Build + test + render machine: Linux laptop `jarvish` (i5-7300U,
+  16GB RAM, Intel HD 620, 158GB free) — holds ALL build files
+  (`~/kid-toy-factory/`); daily backup to Muse VM. The weaker machine is
+  the reference: if it runs on jarvish, it runs on the ASUS.
+- ASUS ZenBook Flip 13 (i5-1135G7, Iris Xe, 8GB, 1080p landscape, Win 11):
+  async confirmation only, whenever he has time — never a development gate.
 - Perf budget (hard): ≤3k tris/model, ≤100k tris/scene, ≤60 dynamic rigid
   bodies, Lambert/flat materials, 1 dir + 1 hemi light, no shadow maps
   (blob shadows), no post-processing.
 - Made-for-Kids classification expected → lower RPM; plan accordingly.
-- One-app-at-a-time discipline on the ASUS (never render while CapCut open).
+- One-heavy-job-at-a-time discipline on jarvish (never render while
+  building/testing). Overnight batch renders OK.
 - YouTube 2026 inauthentic-content rules: templated series risk
   demonetization — variation system is mandatory, not polish.
 

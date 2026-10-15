@@ -40,16 +40,17 @@ Violate one → the phase's tests fail by definition.
 14. Every feature: unit test (GUT) where logic is pure + render smoke test
     (scripted input, screenshots, visual inspection) + his manual playtest
     per phase. "It compiled" is not done.
-15. Nothing is handed to Urbish until everything is green (standing
-    test-first rule).
+15. Nothing is handed to Urbish until everything is green on jarvish
+    (standing test-first rule).
 
 ## Git & machines
 16. Git from the first change; small commits; every commit gets its own
     distinct descriptive message (his standing rule).
 17. Repo is PRIVATE and stays private. Never flip visibility.
-18. Build machine = jarvish (`~/kid-toy-factory/`). Render/prod machine =
-    ASUS. Daily backup jarvish → Muse VM (cron, his explicit ask).
-19. One-app-at-a-time on the ASUS during renders. Overnight batch OK.
+18. Build + test + render ALL happen on jarvish (`~/kid-toy-factory/`).
+    The ASUS is async confirmation only (TASK-901) — never a gate, never a
+    blocker. (His correction, 2026-10-15.)
+19. One-heavy-job-at-a-time on jarvish during renders. Overnight batch OK.
 20. $0 budget: free libraries, CC0 assets only. No paid services.
 
 ## His standing rules (apply here too)

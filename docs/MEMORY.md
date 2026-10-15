@@ -67,3 +67,10 @@
   tooling + harness (TASK-003/004) → GATE-0 record.bat on ASUS.
   PENDING from him: kid-toy-spike.zip + Claude/Gemini chat docs + extra resources.
 - NO game code until he approves these docs.
+- **CORRECTION 2026-10-15 (his, after reading the review):** jarvish does
+  build + testing + rendering, ALL of it. His logic: jarvish (i5-7300U,
+  HD 620) is the weaker machine — if it runs there, it of course runs on
+  the ASUS. The ASUS gets an async confirmation test (TASK-901) whenever he
+  has time; it is never a gate and development never stops waiting for him.
+  GATE-0 moved to jarvish. Docs updated: PRD/ARCHITECTURE/TASKS/TEST_PLAN/
+  RULES/DECISIONS (ADR-003, ADR-011, ADR-013 rewritten).

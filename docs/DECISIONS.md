@@ -38,19 +38,19 @@ randomly re-litigates them. Dated; supersede only by explicit Urbish override.
 - **Consequences:** Need the ffmpeg → H.264 transcode scripted (AVI/MJPEG is
   big, 4GB cap — fine for ≤60s clips); batch queue design is mandatory.
 
-## ADR-003 — Build on jarvish, render-gate on the ASUS (2026-10-15)
-- **Decision:** ALL build files live on the Linux laptop `jarvish`
-  (i5-7300U, 16GB RAM, 158GB free) at `~/kid-toy-factory/`; daily backup to
-  the Muse VM. Performance/perf gates run on the ASUS ZenBook (i5-1135G7,
-  Iris Xe, 8GB) — the actual production machine.
-- **Reason:** jarvish has 2× the RAM and free disk; the ASUS stays clean for
-  renders and CapCut. Urbish explicitly asked: all build files on his Linux
-  box, backed up periodically; use it for real UI-based testing, not just
-  command checks.
-- **Rejected:** Building on the ASUS (contaminates the render machine;
-  8GB shared memory is the constraint we're designing around, not building in).
-- **Consequences:** Repo init + docs sync on jarvish now; backup cron daily;
-  Phase 0 `record.bat` gate must still run on the ASUS before game code.
+## ADR-003 — jarvish is the build/test/render machine; ASUS is async confirmation (2026-10-15, corrected by Urbish)
+- **Decision:** jarvish does EVERYTHING: build, UI-based testing, and all
+  production rendering. The ASUS gets tested only when he has time — it is a
+  confirmation, never a gate. Development never stops waiting for him.
+- **Reason:** His call after reading the review: jarvish (i5-7300U, HD 620)
+  is the weaker machine — if the toy builds, tests, and renders there, it of
+  course runs on the stronger ASUS (i5-1135G7, Iris Xe). Blocking development
+  on his availability would stall the project for no technical reason.
+- **Rejected:** ASUS as the render/prod machine with jarvish as build-only
+  (the v2.0 draft — wrong; it made every phase wait on his laptop time).
+- **Consequences:** GATE-0 runs on jarvish, not the ASUS. BatchQueue targets
+  jarvish (Xvfb + opengl3/llvmpipe for headless renders). The ASUS check
+  becomes TASK-901: non-blocking, done whenever he has time.
 
 ## ADR-004 — Modularity: content = drop-in modules, zero core edits (2026-10-15)
 - **Decision:** Characters, vehicles, destroyers, obstacles, arenas are
@@ -144,17 +144,20 @@ randomly re-litigates them. Dated; supersede only by explicit Urbish override.
 - **Consequences:** Phase 0 spike must verify the actual vertical-output
   path on the ASUS (Movie Maker resolution handling).
 
-## ADR-011 — Test on real rendering, not just commands (2026-10-15)
-- **Decision:** jarvish testing = scripted input + screenshot capture from
-  actual renders, inspected visually by Muse (Xvfb + opengl3). Plus GUT unit
-  tests, plus Urbish's manual playtest per phase on the ASUS, plus the
-  Phase 0 `record.bat` gate.
-- **Reason:** His explicit requirement: "actual ui based interaction, not
-  just lint and command based testing." A green linter never caught a
-  missing face decal.
-- **Rejected:** Lint/typecheck-only QA; "it compiled, ship it."
-- **Consequences:** Test harness scaffolding is Phase 0 infra work;
-  screenshot review is part of every phase's definition of done.
+## ADR-011 — Test on real rendering, all on jarvish; ASUS is non-blocking confirmation (2026-10-15, corrected by Urbish)
+- **Decision:** All testing happens on jarvish: scripted input + screenshot
+  capture from actual renders, inspected visually by Muse (Xvfb + opengl3);
+  GUT unit tests; recorded-clip verification on jarvish. His manual playtest
+  on the ASUS is a non-blocking confirmation whenever he has time — phases
+  close on jarvish results, never waiting for him.
+- **Reason:** His explicit requirements combined: "actual ui based
+  interaction, not just lint and command based testing" AND "use jarvish for
+  build and testing and rendering all... that way our development doesn't
+  stop." If it renders on the weaker machine, it renders on the ASUS.
+- **Rejected:** ASUS-gated phases (v2.0 draft — stalled development on his
+  availability); lint/typecheck-only QA; "it compiled, ship it."
+- **Consequences:** Test harness + render verification are jarvish-native;
+  TASK-901 tracks the async ASUS confirmation without blocking anything.
 
 ## ADR-012 — Git from the first change, private repo (2026-10-15)
 - **Decision:** Git initialized with the docs commit; small commits, each
@@ -166,16 +169,18 @@ randomly re-litigates them. Dated; supersede only by explicit Urbish override.
 - **Consequences:** jarvish repo init now; never flip visibility without
   his explicit order.
 
-## ADR-013 — One-app-at-a-time on the ASUS; overnight batch OK (2026-10-15)
-- **Decision:** Never render while CapCut (or a browser) is open on the
-  ASUS. Batch renders run overnight; thermal throttling then only costs time.
-- **Reason:** 8GB shared memory means any concurrent heavy app risks the
-  render. Offline rendering makes throttling harmless — but only if the
-  machine is otherwise idle.
-- **Rejected:** "Render in the background while editing" — the fastest way
+## ADR-013 — One heavy job at a time on jarvish; overnight batch OK (2026-10-15, corrected by Urbish)
+- **Decision:** jarvish runs one heavy job at a time (render OR build-test,
+  never both). Batch renders run overnight; thermal throttling then only
+  costs time.
+- **Reason:** Offline rendering makes throttling harmless — but only if the
+  machine is otherwise idle. Since jarvish is now the render machine (not
+  the ASUS), the discipline moves with it.
+- **Rejected:** "Render in the background while building" — the fastest way
   to waste a night.
 - **Consequences:** BatchQueue script + a written operating-discipline note
-  in the repo; <12 min/video end-to-end target.
+  in the repo; <12 min/video end-to-end target (measured on jarvish; ASUS
+  will be faster).
 
 ## ADR-014 — Made-for-Kids expected; 10K views is the signal gate (2026-10-15)
 - **Decision:** Assume Made-for-Kids classification (lower RPM, no
