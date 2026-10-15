@@ -101,6 +101,12 @@ func _assemble() -> void:
 	_destroyer = ContentRegistry.spawn(str(d.get("id", "")), d_params, self)
 	if _destroyer != null:
 		_destroyer.name = "Destroyer"
+	for oi in _preset.get("obstacles", []).size():
+		var ob: Dictionary = _preset["obstacles"][oi]
+		var ob_params: Dictionary = _normalize_params((ob.get("params", {}) as Dictionary).duplicate())
+		var ob_node := ContentRegistry.spawn(str(ob.get("id", "")), ob_params, self)
+		if ob_node != null:
+			ob_node.name = "Obstacle%d" % oi
 	for roster in _preset.get("rosters", []):
 		var count := int(roster.get("count", 0))
 		var positions := _grid_positions(count)
