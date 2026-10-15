@@ -62,8 +62,9 @@ func _setup_overlays() -> void:
 		lbl.add_theme_color_override("font_outline_color", Color(0, 0, 0))
 		lbl.add_theme_constant_override("outline_size", 12)
 		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		lbl.position = Vector2(140, float(o.get("y", 400)))
-		lbl.size = Vector2(800, 200)
+		lbl.position = Vector2(0, float(o.get("y", 400)))
+		lbl.size = Vector2(1080, 200)
+		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		_overlay_layer.add_child(lbl)
 		o["_node"] = lbl
 
