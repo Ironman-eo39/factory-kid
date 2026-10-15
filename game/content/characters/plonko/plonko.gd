@@ -63,7 +63,24 @@ func _build_visual() -> void:
 	# center the model on the body origin: shift so feet sit at y=-1.3
 	inst.position = Vector3(0, -1.15, 0)
 	_visual.add_child(inst)
+	# golden-wood tint to match the reference (model is too dark/red)
+	_golden_texture(inst)
 
+
+const GOLDEN_TEX := preload("res://content/characters/plonko/model_src/tung_golden.png")
+
+func _golden_texture(n: Node) -> void:
+	# Swap the dark-brown texture for the golden-processed one (keeps face UVs).
+	if n is MeshInstance3D:
+		var mi := n as MeshInstance3D
+		var m := mi.get_active_material(0)
+		if m is StandardMaterial3D:
+			var sm := (m as StandardMaterial3D).duplicate() as StandardMaterial3D
+			sm.albedo_texture = GOLDEN_TEX
+			sm.albedo_color = Color(1, 1, 1)
+			mi.material_override = sm
+	for c in n.get_children():
+		_golden_texture(c)
 
 func _start_bob() -> void:
 	var tw := _visual.create_tween()
