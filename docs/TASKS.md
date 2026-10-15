@@ -24,9 +24,14 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
 - [ ] **TASK-003** Tooling scaffold: `tools/` with `tri_lint.py`,
   `manifest_check.py`, `to_mp4.sh` (ffmpeg → H.264), `record.sh` skeleton,
   `batch_queue.py` skeleton. *Accept: each script has --help and a dry-run.*
-- [ ] **TASK-004** Test harness: GUT wired for `tests/unit/`; render smoke
-  test runner (scene → scripted input → screenshots) in `tests/render/`.
-  *Accept: a dummy scene passes the full harness end to end.*
+- [x] **TASK-004** Test harness: GUT 9.6.1 wired in `tests/harness/`
+  (project + `addons/gut`, unit tests in `tests/unit/`, run headless:
+  `-s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -gexit` — 2/2 green);
+  render smoke test runner `tests/render/run_render_test.sh`
+  (PROJECT SCRIPT OUT_PNG → Xvfb + opengl3 → verifies PNG exists; Muse
+  reads the PNG for visual verification). NOTE: harness is scaffolding —
+  TASK-101 absorbs it into the real game project.
+  *Accept: dummy scene passes the full harness end to end — PASS.*
 - [ ] **GATE-0** Capture spike on **jarvish**: unzip `kid-toy-spike.zip`
   (when he sends it), run the record script under Xvfb. *Pass: one clean
   60s 1080×1920 @30fps clip, non-silent audio, `wall_avg` reported.*
