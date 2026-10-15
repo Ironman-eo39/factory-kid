@@ -10,10 +10,17 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
 - [ ] **TASK-001** Repo + docs on jarvish: `git init ~/kid-toy-factory/`,
   copy living docs into `docs/`, `.gitignore` (.godot/, renders/, *.avi),
   initial commit. *Accept: `git log` shows docs commit; backup cron active.*
-- [ ] **TASK-002** Godot 4.6 on jarvish: download Linux build + export
-  templates, verify `--version`, verify Xvfb present (install if missing),
-  smoke-run an empty project under Xvfb + `--rendering-driver opengl3`
-  with screenshot capture. *Accept: screenshot PNG written and readable.*
+- [x] **TASK-002** Godot 4.6 on jarvish: Linux build downloaded
+  (`~/tools/godot-4.6/`, verified `4.6.stable.official.89cea1439`, zip
+  integrity OK) + export templates installed
+  (`~/.local/share/godot/export_templates/4.6.stable/`). Xvfb: NOT in
+  repos/sudo-less — extracted from Arch `xorg-server-xvfb` package to
+  `~/tools/xvfb-env/bin/Xvfb` (no root needed). Renders use llvmpipe
+  software GL (`LIBGL_ALWAYS_SOFTWARE=1`). Helper:
+  `tools/xvfb-run-godot.sh`. Smoke test: scripted 3D scene (red box +
+  ground + light + camera) ran under Xvfb + `--rendering-driver opengl3`,
+  540×960 PNG captured at frame 90 and visually verified by Muse.
+  *Accept: screenshot PNG written and readable — PASS.*
 - [ ] **TASK-003** Tooling scaffold: `tools/` with `tri_lint.py`,
   `manifest_check.py`, `to_mp4.sh` (ffmpeg → H.264), `record.sh` skeleton,
   `batch_queue.py` skeleton. *Accept: each script has --help and a dry-run.*
