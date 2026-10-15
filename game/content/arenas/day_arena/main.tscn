@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://content/arenas/test_arena/arena.gd" id="1"]
 
-[node name="TestArena" type="Node3D"]
+[node name="DayArena" type="Node3D"]
 script = ExtResource("1")

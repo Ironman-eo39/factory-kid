@@ -1,5 +1,5 @@
 extends Node3D
-## test_arena — flat green field + road + invisible walls + light + camera.
+## day_arena — flat green field + road + invisible walls + light + camera.
 ## Content interface: apply_params / get_spawn_transforms / get_tags.
 
 
