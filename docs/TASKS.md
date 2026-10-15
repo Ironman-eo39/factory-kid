@@ -91,9 +91,9 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
 - [x] **TASK-106** Character #1: `content/characters/plonko/` — "Plonko",
   wooden-log character, idle bob+wobble tween, squash on destroyer hit.
   Built 2026-10-15 to the old 20–30% rule (teal bands, paddle club,
-  DIFFERENCE_LOG.md) — **REMODEL PENDING: his 2026-10-15 call → ~90%
-  visual similarity to the reference archetype, copyright handled by him
-  (ADR-007b).** preview.png to be regenerated after remodel.
+  DIFFERENCE_LOG.md) — **REMODEL DONE 2026-10-15: ~90% reference look (bark
+  log, cut-wood top, stern face, tapered baseball bat; REFERENCE_NOTE.md
+  replaces DIFFERENCE_LOG.md) — commit 21a9cb9, preview.png regenerated.**
   *Accept: difference log written; preview.png generated 2026-10-15 —
   PASS (Urbish approval of preview.png pending).*
 - [x] **TASK-107** CameraDirector: `game/scripts/core/camera_director.gd`
