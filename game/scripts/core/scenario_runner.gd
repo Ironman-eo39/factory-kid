@@ -48,12 +48,19 @@ func _assemble() -> void:
 	for roster in _preset.get("rosters", []):
 		var count := int(roster.get("count", 0))
 		var positions := _grid_positions(count)
+		var offset := Vector3.ZERO
+		if roster.has("offset"):
+			var o: Variant = roster["offset"]
+			if o is Array and (o as Array).size() == 3:
+				var a: Array = o
+				offset = Vector3(float(a[0]), float(a[1]), float(a[2]))
 		for i in positions.size():
 			var p: Dictionary = _normalize_params((roster.get("params", {}) as Dictionary).duplicate())
-			p["tint"] = PALETTE[i % PALETTE.size()]
+			if not p.has("tint") and str(roster.get("id", "")) == "test_ball":
+				p["tint"] = PALETTE[i % PALETTE.size()]
 			var b := ContentRegistry.spawn(str(roster.get("id", "")), p, self)
 			if b != null:
-				b.position = positions[i]
+				b.position = positions[i] + offset
 
 
 ## Preset JSON carries Vector3s as [x, y, z] arrays — normalize once here

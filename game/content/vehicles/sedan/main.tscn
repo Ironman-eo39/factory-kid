@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/core/vehicle_base.gd" id="1"]
+
+[node name="Sedan" type="RigidBody3D"]
+script = ExtResource("1")
+model_path = "res://content/vehicles/sedan/sedan.glb"
+default_tint = Color(1, 0.25, 0.3, 1)
+face_offset = Vector3(0, 0.62, 1.33)
+face_size = Vector2(1.1, 1.1)
+collider_center = Vector3(0, 0.55, 0)
+collider_size = Vector3(1.5, 1.15, 2.55)
