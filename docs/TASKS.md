@@ -55,10 +55,18 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
   autoload (scan → validate → spawn with `apply_params` interface).
   *Accept: registry self-test passes — PASS 2026-10-15, 11/11 checks
   (empty tree clean, bad module flagged, good registered, spawn+params).*
-- [ ] **TASK-102** Arena module: `content/arenas/day_arena/` — static
-  ground, invisible walls, sky, blob-shadow setup, module.json +
-  preview.png. *Accept: manifest_check + tri_lint green; smoke-test
-  screenshots show the arena.*
+- [x] **TASK-102** Arena module: `content/arenas/day_arena/` — static
+  ground, invisible walls, sky, lighting, camera, module.json.
+  *Accept: manifest_check + tri_lint green; smoke-test screenshots show the
+  arena — PASS 2026-10-15 (3/3 modules lint green, arena visible in renders).
+  Deferred to content-polish: blob shadows, preview.png.*
+- [x] **TASK-102b** ScenarioRunner (unnamed in plan, required by TASK-109):
+  `game/scenes/scenario_runner.tscn` (main scene) reads
+  `--preset=res://presets/*.json`, assembles via ContentRegistry (arena +
+  destroyer + ball rosters), fires timeline beats, quits at duration.
+  *Accept: 60s spike-equivalent render from JSON, zero code change — PASS
+  2026-10-15: 1080×1920 @30fps, 5/5 beats, non-silent audio, 138s wall.
+  Physics verified: hammer smash contacts + squash confirmed.*
 - [ ] **TASK-103** Asset intake: Kenney Car Kit (CC0) → pick 5 cars,
   tri-count each (≤3k), candy recolor material-override test, face-decal
   quad (angry/happy/dizzy variants). License file kept.
@@ -66,16 +74,18 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
 - [ ] **TASK-104** Moon-ball car: sphere body + 4 wheels, sphere collider,
   squash tween hook, dizzy-face swap on hard hit (2s).
   *Accept: drop test shows squash + face swap in screenshots.*
-- [ ] **TASK-105** Destroyers: giant hammer (box + cylinder, kinematic,
-  anticipation pause 0.6s → slam, CCD on), battle axe, slap hand — three
-  modules. *Accept: trigger → slam → squash + shake visible in render test.*
+- [ ] **TASK-105** Destroyers: hammer DONE 2026-10-15 (`test_hammer`:
+  box + cylinder, kinematic, 0.6s anticipation → slam, trigger → slam →
+  squash + shake verified in render test); battle axe + slap hand remain.
+  *Accept: trigger → slam → squash + shake visible in render test.*
 - [ ] **TASK-106** Character #1: primitive-built brainrot archetype (own
   name, 20–30% geometry difference logged), bob animation via tweens.
   *Accept: difference log written; preview.png approved by Urbish.*
 - [ ] **TASK-107** CameraDirector: wide / dramatic-low / follow presets +
   impulse-scaled shake. *Accept: 10s render test shows all 3 angles.*
-- [ ] **TASK-108** AudioSynth: procedural impacts (boing/crash/splat) scaled
-  by impulse; mixer buses; one Suno chant WAV imported + triggered.
+- [ ] **TASK-108** AudioSynth: procedural boom/whistle DONE 2026-10-15
+  (in `test_hammer`, impact-scaled); mixer buses + one Suno chant WAV
+  import + trigger remain.
   *Accept: recorded clip has non-silent, synced audio.*
 - [ ] **TASK-109** Recorder: `tools/record.sh` → Movie Maker CLI →
   `to_mp4.sh` → finished MP4 + resolution/audio/wall_avg verification.

@@ -66,8 +66,8 @@
 - **GATE-0 PASSED 2026-10-15 (jarvish):** spike rendered 60s 1080×1920
   @30fps, non-silent audio, wall_avg ≈65ms/frame on llvmpipe; MP4
   transcoded. Godot 4.6 Movie Maker confirmed as production path.
-- NEXT: Phase 1 — TASK-102 ScenarioRunner next (preset JSON → scene assembly
-  → timeline → quit; 60s spike-equivalent render).
+- NEXT: Phase 1 — TASK-103 Kenney car intake (4 cars + candy recolors +
+  face decals + big/small variants) then TASK-104/105 destroyers/characters.
   PENDING from him: kid-toy-spike.zip + Claude/Gemini chat docs + extra resources.
 - NO game code until he approves these docs.
 - **CORRECTION 2026-10-15 (his, after reading the review):** jarvish does
