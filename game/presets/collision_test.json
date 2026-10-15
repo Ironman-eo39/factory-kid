@@ -1,0 +1,1 @@
+{"arena":{"id":"test_arena","params":{}},"beats":[{"action":"trigger","t":1.0,"target":"destroyer"}],"destroyer":{"id":"test_hammer","params":{"position":[0,7.0,2.0]}},"display_name":"Collision test (hammer over balls)","duration":6.0,"id":"collision_test","rosters":[{"count":6,"id":"test_ball","params":{}}]}

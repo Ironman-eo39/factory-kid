@@ -6,6 +6,7 @@ config_version=5
 [application]
 
 config/name="KidToyFactory"
+run/main_scene="res://scenes/scenario_runner.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [autoload]
