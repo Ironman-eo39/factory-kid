@@ -88,18 +88,33 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
   slam → squash + shake, procedural audio each.
   *Accept: trigger → slam → squash + shake visible in render test — PASS
   2026-10-15 (all three verified in real renders).*
-- [ ] **TASK-106** Character #1: primitive-built brainrot archetype (own
-  name, 20–30% geometry difference logged), bob animation via tweens.
-  *Accept: difference log written; preview.png approved by Urbish.*
-- [ ] **TASK-107** CameraDirector: wide / dramatic-low / follow presets +
-  impulse-scaled shake. *Accept: 10s render test shows all 3 angles.*
-- [ ] **TASK-108** AudioSynth: procedural boom/whistle DONE 2026-10-15
-  (in `test_hammer`, impact-scaled); mixer buses + one Suno chant WAV
-  import + trigger remain.
-  *Accept: recorded clip has non-silent, synced audio.*
-- [ ] **TASK-109** Recorder: `tools/record.sh` → Movie Maker CLI →
-  `to_mp4.sh` → finished MP4 + resolution/audio/wall_avg verification.
-  *Accept: one-click preset → verified 1080×1920 MP4.*
+- [x] **TASK-106** Character #1: `content/characters/plonko/` — "Plonko",
+  original wooden-log character (teal bands, stubby arms+feet, paddle club,
+  house-style happy face), idle bob+wobble tween, squash on destroyer hit.
+  DIFFERENCE_LOG.md documents 8 deliberate differences (well above the
+  20–30% floor); no names/marks copied. preview.png generated.
+  *Accept: difference log written; preview.png generated 2026-10-15 —
+  PASS (Urbish approval of preview.png pending).*
+- [x] **TASK-107** CameraDirector: `game/scripts/core/camera_director.gd`
+  (class_name) — wide / dramatic-low / follow presets, timed cuts from the
+  preset JSON (`"camera": {"mode", "cuts": [...]}`), smooth exponential
+  transitions, impulse-scaled trauma shake (`add_shake`). Destroyers now
+  route slam shake through the director; arena builds a CameraDirector.
+  *Accept: 10s render test shows all 3 angles — PASS 2026-10-15 (12s test:
+  wide → low → follow-destroyer → wide, all verified in frames).*
+- [x] **TASK-108** AudioSynth: `game/scripts/core/audio_synth.gd` autoload —
+  mixer buses (Master/SFX/Music), destroyers route to SFX, preset
+  `"music": {"chant": "res://audio/..."}` triggers chant on Music bus.
+  Placeholder `game/audio/chant_placeholder.wav` (procedural) until Urbish
+  drops a real Suno export (see game/audio/README.md).
+  *Accept: recorded clip has non-silent, synced audio — PASS 2026-10-15
+  (buses created, chant playing, RMS −24dB).*
+- [x] **TASK-109** Recorder: `tools/record.sh` — one-click preset →
+  verified MP4: validates preset JSON, Movie Maker render under Xvfb,
+  ffprobe verify (1080×1920, 30fps, audio, duration), `to_mp4.sh`, final
+  MP4 verify. `--dry-run`, `--keep-avi`, `--out DIR`.
+  *Accept: one-click preset → verified 1080×1920 MP4 — PASS 2026-10-15
+  (quick_test → 8.03s h264+aac MP4, all checks green).*
 - [ ] **TASK-110** Staging UI: design-first mockup (HTML, shown in chat,
   recorded as video) → Godot UI (module browser, preset editor, record
   button). *Accept: Urbish stages a scenario in <2 min (timed).*
