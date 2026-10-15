@@ -10,6 +10,7 @@ run/main_scene="res://scenes/scenario_runner.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [autoload]
+AudioSynth="*res://scripts/core/audio_synth.gd"
 
 ContentRegistry="*res://scripts/core/content_registry.gd"
 

@@ -32,8 +32,15 @@ func _ready() -> void:
 	_duration = float(_preset.get("duration", 8.0))
 	_assemble()
 	_wire_camera()
+	_wire_music()
 	_beats = _preset.get("beats", [])
 	print("[runner] preset=%s duration=%.1f beats=%d" % [preset_path, _duration, _beats.size()])
+
+func _wire_music() -> void:
+	var m: Dictionary = _preset.get("music", {})
+	if m.has("chant"):
+		AudioSynth.play_chant(str(m["chant"]), float(m.get("volume_db", -10.0)))
+
 
 func _wire_camera() -> void:
 	var dir := get_tree().get_first_node_in_group("camera_director")

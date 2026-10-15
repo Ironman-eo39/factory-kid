@@ -166,6 +166,7 @@ func _play(data: PackedByteArray, sr: int) -> void:
 	stream.stereo = false
 	stream.data = data
 	var p := AudioStreamPlayer3D.new()
+	p.bus = "SFX"
 	p.stream = stream
 	p.unit_size = 6.0
 	add_child(p)

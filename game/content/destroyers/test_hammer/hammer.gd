@@ -40,9 +40,11 @@ func _ready() -> void:
 	handle.position = Vector3(0, 3.8, 0)
 	add_child(handle)
 	sfx_boom = AudioStreamPlayer.new()
+	sfx_boom.bus = "SFX"
 	sfx_boom.stream = _make_boom()
 	add_child(sfx_boom)
 	sfx_whistle = AudioStreamPlayer.new()
+	sfx_whistle.bus = "SFX"
 	sfx_whistle.stream = _make_whistle()
 	add_child(sfx_whistle)
 
