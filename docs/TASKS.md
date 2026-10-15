@@ -32,21 +32,29 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
   reads the PNG for visual verification). NOTE: harness is scaffolding —
   TASK-101 absorbs it into the real game project.
   *Accept: dummy scene passes the full harness end to end — PASS.*
-- [ ] **GATE-0** Capture spike on **jarvish**: unzip `kid-toy-spike.zip`
-  (when he sends it), run the record script under Xvfb. *Pass: one clean
-  60s 1080×1920 @30fps clip, non-silent audio, `wall_avg` reported.*
-  **Fail → fix capture before any game code.** (Parallel option:
-  Three.js+Rapier+CCapture spike if Godot fails.)
+- [x] **GATE-0** Capture gate on **jarvish**: Claude's `kid-toy-spike.zip`
+  run under Xvfb + llvmpipe. *PASS 2026-10-15:*
+  - 8s check: 1080×1920, 30fps MJPEG, audio pcm_s16le 48kHz non-silent
+    (mean −23.4dB, max −0.5dB), wall_avg ≈65ms/frame, frame visually
+    verified (60 candy balls + hammer, correct kid-bait look).
+  - 60s gate: `out60.avi` 174MB, 1080×1920 @30fps, 60.03s, audio non-silent
+    (max 0.0dB boom); rendered in ~131s wall (≈2.2× realtime on software
+    GL — ASUS with real Iris Xe will be faster); transcoded to
+    1080×1920 H.264+AAC MP4 (60.03s) via ffmpeg.
+  - Spike kept at `~/kid-toy-spike/` on jarvish (reference, not repo code).
+  - Verdict: Godot 4.6 Movie Maker is the production path. No fallback needed.
 - [ ] **TASK-901** ASUS confirmation (NON-BLOCKING, whenever he has time):
   copy a build to the ASUS, stage → record → MP4. *Pass: works there too —
   expected, since jarvish is the weaker machine.* Never blocks development.
 
 ## Phase 1 — Toy core (vertical slices, one at a time)
 
-- [ ] **TASK-101** Project scaffold: `project.godot` (1080×1920 viewport,
-  stretch canvas_items/expand, fixed 1/60 physics, Jolt), folder layout per
-  ARCHITECTURE.md, ContentRegistry autoload + `validate_all()`.
-  *Accept: registry self-test passes on an empty content tree.*
+- [x] **TASK-101** Project scaffold: `game/` Godot project (1080×1920
+  viewport, stretch canvas_items/expand, fixed 1/60 physics, Jolt),
+  folder layout per ARCHITECTURE.md (game/ subdir — see note), ContentRegistry
+  autoload (scan → validate → spawn with `apply_params` interface).
+  *Accept: registry self-test passes — PASS 2026-10-15, 11/11 checks
+  (empty tree clean, bad module flagged, good registered, spawn+params).*
 - [ ] **TASK-102** Arena module: `content/arenas/day_arena/` — static
   ground, invisible walls, sky, blob-shadow setup, module.json +
   preview.png. *Accept: manifest_check + tri_lint green; smoke-test

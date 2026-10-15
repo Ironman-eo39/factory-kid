@@ -84,20 +84,26 @@ button.
 ## Project layout (jarvish: `~/kid-toy-factory/`)
 ```
 kid-toy-factory/
-  project.godot
+  game/            the Godot project (res:// = game/)
+    project.godot
+    scenes/        staging_ui.tscn, arenas base scenes
+    scripts/core/  ContentRegistry, ScenarioRunner, VariationEngine,
+                   Recorder, CameraDirector, AudioSynth, BatchQueue
+    content/       modules (see above)
+    presets/       scenario presets
+    assets/       kenney car kit, face decals, chant wavs
+    tests/         self-tests + fixtures
   docs/            PRD, ARCHITECTURE, DESIGN, RULES, TASKS, DECISIONS,
                    TEST_PLAN, SECURITY, MEMORY  (living copies)
-  scenes/          staging_ui.tscn, arenas base scenes
-  scripts/core/    ContentRegistry, ScenarioRunner, VariationEngine,
-                   Recorder, CameraDirector, AudioSynth, BatchQueue
-  content/         modules (see above)
-  presets/         scenario presets
-  assets/          kenney car kit, face decals, chant wavs
   tools/           record.sh, to_mp4.sh, batch_queue.py, tri_lint.py,
-                   manifest_check.py
-  tests/           GUT unit tests + render smoke tests
+                   manifest_check.py, xvfb-run-godot.sh
+  tests/           harness (GUT unit tests), render smoke tests
   .gitignore       (.godot/, *.import cache, renders/, *.avi)
 ```
+Note (TASK-101): the Godot project lives in `game/` rather than the repo
+root, so exported builds never bundle docs/tools/tests. `tests/harness/`
+is a separate throwaway Godot project for GUT; it gets absorbed into
+`game/` once real unit tests need game code.
 
 ## Physics & rendering rules (hard)
 - Fixed 1/60 physics step, 30fps recorded output. World scale in meters.

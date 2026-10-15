@@ -63,9 +63,11 @@
   playtest per phase on the ASUS, plus the Phase 0 record.bat gate.
 - Machines: ALL build files on jarvish (~/kid-toy-factory/), daily backup to
   Muse VM (his explicit ask); ASUS stays the render/prod machine.
-- NEXT: GATE-0 capture gate on jarvish — BLOCKED on kid-toy-spike.zip from
-  Urbish (not yet sent). When it arrives: unzip, run record script under
-  Xvfb, verify 1080×1920 @30fps + audio + wall_avg. Then Phase 1.
+- **GATE-0 PASSED 2026-10-15 (jarvish):** spike rendered 60s 1080×1920
+  @30fps, non-silent audio, wall_avg ≈65ms/frame on llvmpipe; MP4
+  transcoded. Godot 4.6 Movie Maker confirmed as production path.
+- NEXT: Phase 1 — TASK-102 ScenarioRunner next (preset JSON → scene assembly
+  → timeline → quit; 60s spike-equivalent render).
   PENDING from him: kid-toy-spike.zip + Claude/Gemini chat docs + extra resources.
 - NO game code until he approves these docs.
 - **CORRECTION 2026-10-15 (his, after reading the review):** jarvish does
