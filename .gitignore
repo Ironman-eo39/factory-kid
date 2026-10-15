@@ -1,0 +1,6 @@
+.godot/
+*.import
+renders/
+*.avi
+*.mp4
+__pycache__/
