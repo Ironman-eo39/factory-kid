@@ -1,0 +1,1 @@
+{"arena":{"id":"day_arena","params":{}},"beats":[],"destroyer":{"id":"test_hammer","params":{"position":[0,7.0,-30.0]}},"display_name":"Moon-ball drop test (7s)","duration":7.0,"id":"moon_drop","rosters":[{"count":1,"id":"moon_ball","offset":[0,8.0,2.0],"params":{}}]}
