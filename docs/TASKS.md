@@ -67,10 +67,15 @@ jarvish; the ASUS check (TASK-901) is async and never blocks.
   *Accept: 60s spike-equivalent render from JSON, zero code change — PASS
   2026-10-15: 1080×1920 @30fps, 5/5 beats, non-silent audio, 138s wall.
   Physics verified: hammer smash contacts + squash confirmed.*
-- [ ] **TASK-103** Asset intake: Kenney Car Kit (CC0) → pick 5 cars,
-  tri-count each (≤3k), candy recolor material-override test, face-decal
-  quad (angry/happy/dizzy variants). License file kept.
-  *Accept: 5 car modules under content/vehicles/, all lint green.*
+- [x] **TASK-103** Asset intake: Kenney Car Kit 3.1 (CC0) → 5 cars
+  (sedan, suv, hatchback_sports, race_car, taxi; 1952–2474 tris each, all
+  ≤3k), candy recolor via material override, procedural face-decal quad
+  (happy/angry/dizzy via `FaceDecal`), shared `vehicle_base.gd` root
+  (RigidBody3D + box collider + squash on destroyer hit). License kept at
+  `game/assets/kenney-car-kit/LICENSE.txt`.
+  *Accept: 5 car modules under content/vehicles/, all lint green — PASS
+  2026-10-15 (manifest_check 8/8, tri_lint 0 over budget; showcase render
+  verified: candy colors, all 3 faces, hammer smash flips/scatters cars).*
 - [ ] **TASK-104** Moon-ball car: sphere body + 4 wheels, sphere collider,
   squash tween hook, dizzy-face swap on hard hit (2s).
   *Accept: drop test shows squash + face swap in screenshots.*
