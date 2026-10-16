@@ -15,6 +15,7 @@ var _move_timer := 0.0
 var _zone_center := Vector3.ZERO
 var _zone_size := Vector3(8, 0, 8)
 var _move_speed := 1.5
+var _hit_style := "launch"  # launch | compress | deform (set via params)
 
 
 func _ready() -> void:
@@ -50,6 +51,8 @@ func apply_params(params: Dictionary) -> void:
 		position = params["position"]
 	if params.has("tint"):
 		_tint = params["tint"]
+	if params.has("hit_style"):
+		_hit_style = str(params["hit_style"])
 
 
 func get_spawn_transforms() -> Array:
@@ -118,9 +121,10 @@ func _physics_process(delta: float) -> void:
 		_move_dir = to_center.normalized()
 		_move_timer = 1.0
 	# stay upright while wandering (tumbling is for hits, not walking)
-	rotation.x = 0
-	rotation.z = 0
-	angular_velocity = Vector3.ZERO
+	if not _visual.has_meta("hit_active"):
+		rotation.x = 0
+		rotation.z = 0
+		angular_velocity = Vector3.ZERO
 	# move (only when not being squashed/launched)
 	if not _visual.has_meta("squashing"):
 		linear_velocity.x = _move_dir.x * _move_speed
@@ -134,16 +138,38 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("destroyer"):
 		return
-	if _visual.has_meta("squashing"):
+	if _visual.has_meta("hit_active"):
 		return
-	_visual.set_meta("squashing", true)
+	_visual.set_meta("hit_active", true)
+	match _hit_style:
+		"launch":
+			_do_launch()
+		_:
+			_do_squash()
+	var tw := get_tree().create_timer(2.0).timeout
+	await tw
+	if is_instance_valid(_visual):
+		_visual.remove_meta("hit_active")
+
+func _do_launch() -> void:
+	# EXAGGERATED launch: rocket upward, wild spin, stretch in flight
+	linear_velocity = Vector3(randf_range(-4, 4), randf_range(14, 20), randf_range(-4, 4))
+	angular_velocity = Vector3(randf_range(-10, 10), randf_range(-6, 6), randf_range(-10, 10))
 	var tw := _visual.create_tween()
-	# squash pivots around the feet: scale Y down AND shift down so the
-	# head compresses under the hammer instead of poking through it
+	tw.set_parallel(true)
+	# stretch tall during flight (cartoonish)
+	tw.tween_property(_visual, "scale", Vector3(0.7, 1.6, 0.7), 0.15)
+	# big squash on landing
+	tw.set_parallel(false)
+	tw.tween_property(_visual, "scale", Vector3(1.5, 0.25, 1.5), 0.1).set_delay(0.8)
+	tw.tween_property(_visual, "scale", Vector3.ONE, 0.7).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+func _do_squash() -> void:
+	# classic squash (pivot around feet)
+	var tw := _visual.create_tween()
 	tw.set_parallel(true)
 	tw.tween_property(_visual, "scale", Vector3(1.4, 0.32, 1.4), 0.08)
 	tw.tween_property(_visual, "position:y", -0.75, 0.08)
 	tw.set_parallel(false)
 	tw.tween_property(_visual, "scale", Vector3.ONE, 0.6).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	tw.parallel().tween_property(_visual, "position:y", 0.0, 0.6).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-	tw.tween_callback(_visual.remove_meta.bind("squashing"))
