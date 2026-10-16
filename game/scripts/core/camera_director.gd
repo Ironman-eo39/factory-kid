@@ -1,8 +1,9 @@
 class_name CameraDirector
 extends Camera3D
 ## CameraDirector — preset camera angles + timed cuts + impulse shake.
-## Modes: "wide" (default overview), "low" (dramatic low angle),
-## "follow" (tracks a target node, e.g. the destroyer).
+## Modes: "wide" (overview), "low" (dramatic low), "follow" (tracks target),
+## "closeup" (near character), "topdown" (bird's eye), "side" (profile),
+## "orbit" (circles around target).
 ## Configured from the preset's "camera" dict (schema v2):
 ##   {"mode": "wide", "path": [{"t": 0.0, "pos": [...], "look": [...]},
 ##                            {"t": 5.0, "pos": [...], "look": [...]}],
@@ -16,6 +17,12 @@ const WIDE_LOOK := Vector3(0, 0.5, -3.5)
 const LOW_POS := Vector3(0, 1.6, 9.0)
 const LOW_LOOK := Vector3(0, 2.5, -6.0)
 const FOLLOW_OFFSET := Vector3(5.5, 4.5, 8.5)
+const CLOSEUP_POS := Vector3(0, 2.0, 5.0)
+const CLOSEUP_LOOK := Vector3(0, 1.5, 0)
+const TOPDOWN_POS := Vector3(0, 18.0, 2.0)
+const TOPDOWN_LOOK := Vector3(0, 0, -2.0)
+const SIDE_POS := Vector3(10.0, 3.0, 0)
+const SIDE_LOOK := Vector3(0, 1.5, 0)
 
 var mode := "wide"
 var _target: Node3D = null
@@ -25,6 +32,10 @@ var _cut_idx := 0
 var _elapsed := 0.0
 var _trauma := 0.0
 var _look := Vector3(0, 1, -2)
+var _orbiting := false
+var _orbit_speed := 0.5
+var _orbit_radius := 10.0
+var _orbit_height := 5.0
 var _path: Array = []
 var _path_idx := 0
 
@@ -46,6 +57,7 @@ func configure(cam_cfg: Dictionary, targets: Dictionary) -> void:
 
 func set_mode(m: String, target_name: String = "") -> void:
 	mode = m
+	_orbiting = (m == "orbit")
 	if target_name != "" and _targets.has(target_name):
 		_target = _targets[target_name] as Node3D
 	elif mode != "follow":
@@ -115,6 +127,22 @@ func _desired_pos() -> Vector3:
 	match mode:
 		"low":
 			return LOW_POS
+		"closeup":
+			if is_instance_valid(_target):
+				return _target.global_position + Vector3(0, 1.0, 4.0)
+			return CLOSEUP_POS
+		"topdown":
+			return TOPDOWN_POS
+		"side":
+			return SIDE_POS
+		"orbit":
+			var a := _elapsed * _orbit_speed
+			var cx := 0.0
+			var cz := -2.0
+			if is_instance_valid(_target):
+				cx = _target.global_position.x
+				cz = _target.global_position.z
+			return Vector3(cx + cos(a) * _orbit_radius, _orbit_height, cz + sin(a) * _orbit_radius)
 		"follow":
 			if is_instance_valid(_target):
 				return _target.global_position + FOLLOW_OFFSET
@@ -126,6 +154,18 @@ func _desired_look() -> Vector3:
 	match mode:
 		"low":
 			return LOW_LOOK
+		"closeup":
+			if is_instance_valid(_target):
+				return _target.global_position + Vector3(0, 1.2, 0)
+			return CLOSEUP_LOOK
+		"topdown":
+			return TOPDOWN_LOOK
+		"side":
+			return SIDE_LOOK
+		"orbit":
+			if is_instance_valid(_target):
+				return _target.global_position + Vector3(0, 1.0, 0)
+			return Vector3(0, 1, -2)
 		"follow":
 			if is_instance_valid(_target):
 				return _target.global_position + Vector3(0, 1.0, 0)
