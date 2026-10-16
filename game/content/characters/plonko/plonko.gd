@@ -10,11 +10,10 @@ const MODEL_SCALE := 0.30  # raw model ~7.6u -> ~2.3m tall in game
 
 var _tint: Color = Color(-1, -1, -1, -1)  # sentinel: apply_params may set before _ready
 var _visual: Node3D
-var _move_dir := Vector3.ZERO
-var _move_timer := 0.0
-var _zone_center := Vector3.ZERO
-var _zone_size := Vector3(8, 0, 8)
-var _move_speed := 1.5
+var _walk_speed := 2.0
+var _walk_dir := Vector3(0, 0, 1)  # along the road (Z axis)
+var _path_min_z := -14.0
+var _path_max_z := 6.0
 var _hit_style := "launch"  # launch | compress | deform (set via params)
 
 
@@ -41,8 +40,6 @@ func _ready() -> void:
 	_build_visual()
 	_start_bob()
 	body_entered.connect(_on_body_entered)
-	_zone_center = Vector3(position.x, 0, position.z)
-	_pick_new_direction()
 
 
 func apply_params(params: Dictionary) -> void:
@@ -105,34 +102,22 @@ func _start_bob() -> void:
 	tw2.tween_property(_visual, "rotation:z", -0.08, 0.8).set_ease(Tween.EASE_IN_OUT)
 
 
-func _pick_new_direction() -> void:
-	var dirs := [Vector3(1,0,0), Vector3(-1,0,0), Vector3(0,0,1), Vector3(0,0,-1)]
-	_move_dir = dirs[randi() % dirs.size()]
-	_move_timer = randf_range(1.0, 2.5)
-
 func _physics_process(delta: float) -> void:
-	_move_timer -= delta
-	if _move_timer <= 0:
-		_pick_new_direction()
-	# stay in zone: steer back toward center when near edge
-	var to_center := _zone_center - global_position
-	to_center.y = 0
-	if to_center.length() > _zone_size.x * 0.5:
-		_move_dir = to_center.normalized()
-		_move_timer = 1.0
-	# stay upright while wandering (tumbling is for hits, not walking)
+	# stay upright while walking (tumbling is for hits, not walking)
 	if not _visual.has_meta("hit_active"):
 		rotation.x = 0
 		rotation.z = 0
 		angular_velocity = Vector3.ZERO
-	# move (only when not being squashed/launched)
-	if not _visual.has_meta("squashing"):
-		linear_velocity.x = _move_dir.x * _move_speed
-		linear_velocity.z = _move_dir.z * _move_speed
-		# face movement direction
-		if _move_dir.length() > 0.1:
-			var target_yaw := atan2(_move_dir.x, _move_dir.z)
-			_visual.rotation.y = lerp_angle(_visual.rotation.y, target_yaw, delta * 5.0)
+	# walk along the road (procession)
+	if not _visual.has_meta("hit_active"):
+		linear_velocity.x = _walk_dir.x * _walk_speed
+		linear_velocity.z = _walk_dir.z * _walk_speed
+		# loop back to start when reaching the end
+		if global_position.z > _path_max_z:
+			global_position.z = _path_min_z
+		# face walk direction
+		var target_yaw := atan2(_walk_dir.x, _walk_dir.z)
+		_visual.rotation.y = lerp_angle(_visual.rotation.y, target_yaw, delta * 5.0)
 
 
 func _on_body_entered(body: Node) -> void:

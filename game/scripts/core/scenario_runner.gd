@@ -110,6 +110,8 @@ func _assemble() -> void:
 	for roster in _preset.get("rosters", []):
 		var count := int(roster.get("count", 0))
 		var positions := _grid_positions(count)
+		if str(roster.get("layout", "")) == "procession":
+			positions = _procession_positions(count, roster)
 		var offset := Vector3.ZERO
 		if roster.has("offset"):
 			var o: Variant = roster["offset"]
@@ -136,6 +138,17 @@ func _normalize_params(p: Dictionary) -> Dictionary:
 			var a: Array = v
 			p["position"] = Vector3(float(a[0]), float(a[1]), float(a[2]))
 	return p
+
+
+func _procession_positions(count: int, roster: Dictionary) -> Array:
+	# staggered along the road (Z axis), one after another
+	var out: Array = []
+	var spacing := float(roster.get("spacing", 4.0))
+	var x := float(roster.get("lane_x", 0.0))
+	var start_z := float(roster.get("start_z", -14.0))
+	for i in count:
+		out.append(Vector3(x + randf_range(-0.5, 0.5), 0.65, start_z - i * spacing))
+	return out
 
 
 func _grid_positions(count: int) -> Array:

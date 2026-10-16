@@ -1,0 +1,38 @@
+{
+ "id": "procession_test",
+ "display_name": "Procession + swinging hammer (15s)",
+ "version": 2,
+ "seed": 7,
+ "duration": 15.0,
+ "arena": {
+  "id": "day_arena",
+  "params": {}
+ },
+ "destroyer": {
+  "id": "test_hammer",
+  "params": {
+   "position": [
+    0,
+    3.2,
+    0
+   ],
+   "mode": "swing"
+  }
+ },
+ "rosters": [
+  {
+   "id": "plonko",
+   "count": 6,
+   "params": {
+    "hit_style": "launch"
+   },
+   "layout": "procession",
+   "spacing": 5.0,
+   "start_z": -12.0,
+   "lane_x": 0.0
+  }
+ ],
+ "camera": {
+  "mode": "wide"
+ }
+}

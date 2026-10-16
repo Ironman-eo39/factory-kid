@@ -11,6 +11,11 @@ const H_LOW := 0.9
 
 var h_state: HammerState = HammerState.IDLE
 var h_t := 0.0
+var _swing_mode := false
+var _swing_t := 0.0
+var _swing_speed := 1.2  # radians per second
+var _swing_amp := 0.7  # radians (~40 degrees each way)
+var _pivot: Node3D
 var sfx_boom: AudioStreamPlayer
 var sfx_whistle: AudioStreamPlayer
 
@@ -52,6 +57,9 @@ func _ready() -> void:
 func apply_params(params: Dictionary) -> void:
 	if params.has("position"):
 		position = params["position"]
+	if str(params.get("mode", "")) == "swing":
+		_swing_mode = true
+		_setup_swing()
 
 
 func get_spawn_transforms() -> Array:
@@ -79,7 +87,26 @@ func _mat(c: Color) -> StandardMaterial3D:
 	return m
 
 
+func _setup_swing() -> void:
+	# pivot at top of handle; hammer head swings like a pendulum
+	_pivot = Node3D.new()
+	_pivot.position = Vector3(0, 6.0, 0)  # top of handle
+	add_child(_pivot)
+	# reparent head+handle visual to pivot (keep collision on body)
+	for c in get_children():
+		if c is MeshInstance3D:
+			remove_child(c)
+			_pivot.add_child(c)
+			c.position -= _pivot.position
+
 func _physics_process(delta: float) -> void:
+	if _swing_mode:
+		_swing_t += delta
+		var ang := sin(_swing_t * _swing_speed) * _swing_amp
+		if _pivot:
+			_pivot.rotation.z = ang
+		# play whoosh at extremes
+		return
 	var y := position.y
 	match h_state:
 		HammerState.WIND:
