@@ -14,8 +14,10 @@ extends Camera3D
 
 const WIDE_POS := Vector3(0, 8.5, 10.0)
 const WIDE_LOOK := Vector3(0, 0.5, -3.5)
-const LOW_POS := Vector3(0, 1.6, 9.0)
-const LOW_LOOK := Vector3(0, 2.5, -6.0)
+# BUG (2026-10-16, Urbish): low angle doesn't fill frame properly.
+# Car is small / poorly framed. Needs rework — deferred to Claude phase.
+const LOW_POS := Vector3(0, 1.2, 7.0)
+const LOW_LOOK := Vector3(0, 1.8, 0)
 const FOLLOW_OFFSET := Vector3(5.5, 4.5, 8.5)
 const CLOSEUP_POS := Vector3(0, 2.0, 5.0)
 const CLOSEUP_LOOK := Vector3(0, 1.5, 0)
