@@ -1,48 +1,64 @@
-# Claude Handoff — Kid Toy Factory engine-v2
+# Claude Handoff — Kid Toy Factory
 
-## What this is
-Godot 4.6 project that renders kids' Shorts offline (1080×1920, 30fps).
-Characters walk down a road, a hammer pistons up/down, hits launch them flying.
-`./tools/record.sh --out /tmp/x <preset>` → MP4.
+## The situation (read this first)
+Urbish is NOT happy with what Muse modelled. The characters, scenes, movements — all of it looks fake, simple, and bland. He wants you to model EVERYTHING from scratch.
 
-## Branch
-`engine-v2` on https://github.com/UrbishCodes/kid-toy-factory
+**What Muse built (keep this):**
+- Camera angle code (`camera_director.gd`) — 7 angles, cuts, dolly paths
+- Basic recording structure (`tools/record.sh` → 1080×1920 MP4)
+- That's it. The engine skeleton. Everything visual is yours to redo.
 
-## What's working
-- **Procession movement** (`plonko.gd`): characters walk +Z down the road, staggered, loop back. Stay upright.
-- **Piston hammer** (`hammer.gd`, `mode: "swing"`): sine wave up/down. Hits when down, characters pass under when up.
-- **Launch hit style** (`hit_style: "launch"`): hammer contact → rocket up (14-20 m/s), wild spin, stretch mid-flight, squash on landing.
-- **Camera** (`camera_director.gd`): 7 modes (wide, low, follow, closeup, topdown, side, orbit) + timed `cuts` + smooth `path` dolly. Preset-driven.
-- **Recording** (`tools/record.sh`): verified 1080×1920 h264+aac.
+**What you need to build (everything else):**
+- Every character — model, texture, proportions, face
+- Every movement — walk cycles, idle, reactions, hit responses
+- Every expression — eyes, mouth, emotions that read at a distance
+- Every obstacle — design and model
+- Every surrounding/scenery — background, depth, atmosphere
+- Every texture — materials that look real, not flat game-engine default
 
-## Known bugs (deferred, fix these)
-1. **Low camera angle** doesn't fill frame — car is small/poorly framed. See BUG comment in `camera_director.gd`.
-2. Characters sometimes clip through each other in procession.
-3. Hammer timing vs character spacing not tuned — some hits feel random.
+## Character copyright (Urbish's call)
+Urbish takes full responsibility for copyright risk — "it's on him."
+Model characters **90% similar** to the references he provides. Don't water them down, don't "original-ify" them. He wants them close.
 
-## What Urbish wants from you
-**Visual quality + physics realism.** His words: "happy with 15fps realistic, don't want 200fps blob."
+## Reference files (Urbish will provide)
+1. **Character/scene references** — he will generate and share these. Follow them closely.
+2. **Cocomelon research** — he will share his research on their technique. You MUST understand and implement it.
 
-1. **Character models**: realistic proportions, proper topology, materials that look real (wood grain, etc.). Faces that read at distance.
-2. **Physics**: weighty feel — proper mass, friction, bounce. Soft-body-ish squash (not just scale trick). Dust puff on impact.
-3. **Scenes**: depth, proper lighting, shadows. Less "flat game engine default."
-4. **Exaggeration**: childish, big, cartoonish — wide eyes, bouncy movement, huge reactions. (But built on solid realistic base.)
+## The Cocomelon technique (critical)
+Urbish explained how Cocomelon hooked every kid:
+- **Colors and flashy visuals** — saturated, high-contrast, impossible to ignore
+- **Sound synced to action** — every movement has a matching sound
+- **Scene/element change every ~3 seconds** — never let the screen go static
+- **They did real research**: put kids in front of videos, recorded the exact moment a kid looked away, then reworked those portions until kids couldn't look away
+- The result: so much color, movement, character emotion, and sound variation that kids literally cannot look away
 
-## Hit styles to build (Urbish guides each)
-- ✅ launch (done)
-- ⏳ compress+bounce: character squashes flat, springs back, hammer bounces off wildly
-- ⏳ deform: character stays dented for seconds before popping back
+**You need to implement this in our game:**
+- Every 3 seconds SOMETHING changes — camera angle, character action, color pop, sound cue
+- Characters need big readable emotions — happy, scared, surprised, dizzy
+- Colors must be vivid and saturated, not muted
+- Sound design synced to every hit, bounce, and movement
+- If a scene feels static for even a moment, it's wrong
 
-## Key files
-- `game/content/characters/plonko/plonko.gd` — character logic
-- `game/content/destroyers/test_hammer/hammer.gd` — hammer logic
-- `game/scripts/core/camera_director.gd` — camera
-- `game/scripts/core/scenario_runner.gd` — preset runner
-- `game/presets/procession_test.json` — main test scene
-- `game/presets/cam_showcase.json` — camera demo
+## Technical details
+- **Branch:** `engine-v2` on https://github.com/UrbishCodes/kid-toy-factory
+- **Engine:** Godot 4.6, renders offline via `--write-movie` (1080×1920, 30fps)
+- **Test:** `./tools/record.sh --out /tmp/x <preset_name>` → MP4
+- **Presets:** `game/presets/*.json` — scenario definitions
+- **Urbish's performance stance:** "happy with 15fps realistic, don't want 200fps blob" — quality over speed
 
-## Urbish's rules
-- Test on jarvish (his Linux laptop), not just compile
+## Key files (structure to keep, visuals to replace)
+- `game/content/characters/plonko/plonko.gd` — character logic (movement code works, model doesn't)
+- `game/content/destroyers/test_hammer/hammer.gd` — hammer piston logic works
+- `game/scripts/core/camera_director.gd` — camera system works
+- `game/scripts/core/scenario_runner.gd` — preset runner works
+- `game/presets/procession_test.json` — main test: characters walk road, hammer smashes
+
+## Known bugs
+1. Low camera angle doesn't fill frame (marked in code, deferred)
+2. Characters clip through each other in procession
+
+## Urbish's working rules
 - One small task at a time, show renders for review
+- Test actual renders, not just code
 - English only, terse updates
-- Copyright for characters is his call (ADR-007b) — don't re-litigate
+- He reviews every visual change — nothing merges without his eye on it
