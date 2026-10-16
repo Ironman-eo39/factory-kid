@@ -1,19 +1,65 @@
 {
-  "id": "moon_obstacle_test",
-  "display_name": "Moon arena + lava + pipe (12s)",
-  "version": 2,
-  "seed": 99,
-  "duration": 12.0,
-  "arena": {"id": "moon_arena", "params": {}},
-  "destroyer": {"id": "test_hammer", "params": {"position": [0, 7.0, -2.0]}},
-  "obstacles": [
-    {"id": "lava_pit", "params": {"position": [-3.0, 0.0, -6.0]}},
-    {"id": "drain_pipe", "params": {"position": [3.0, 0.0, -6.0]}}
-  ],
-  "rosters": [{"id": "plonko", "count": 6, "params": {}, "offset": [0, 0.85, 2.0]}],
-  "beats": [{"t": 2.0, "action": "trigger", "target": "destroyer"}],
-  "camera": {"mode": "wide"},
-  "overlays": [
-    {"t": 0.5, "duration": 2.5, "text": "MOON MAYHEM", "size": 84, "y": 300}
-  ]
+ "id": "moon_obstacle_test",
+ "display_name": "Moon arena + lava + pipe (12s)",
+ "version": 2,
+ "seed": 99,
+ "duration": 12.0,
+ "arena": {
+  "id": "moon_arena",
+  "params": {}
+ },
+ "destroyer": {
+  "id": "test_hammer",
+  "params": {
+   "position": [
+    0,
+    7.0,
+    2.0
+   ]
+  }
+ },
+ "obstacles": [
+  {
+   "id": "lava_pit",
+   "params": {
+    "position": [
+     -3.0,
+     0.0,
+     -6.0
+    ]
+   }
+  },
+  {
+   "id": "drain_pipe",
+   "params": {
+    "position": [
+     3.0,
+     0.0,
+     -6.0
+    ]
+   }
+  }
+ ],
+ "rosters": [
+  {
+   "id": "plonko",
+   "count": 6,
+   "params": {},
+   "offset": [
+    0,
+    0.85,
+    2.0
+   ]
+  }
+ ],
+ "beats": [
+  {
+   "t": 2.0,
+   "action": "trigger",
+   "target": "destroyer"
+  }
+ ],
+ "camera": {
+  "mode": "wide"
+ }
 }

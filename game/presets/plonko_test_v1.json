@@ -1,6 +1,6 @@
 {
  "arena": {
-  "id": "day_arena",
+  "id": "moon_arena",
   "params": {}
  },
  "beats": [
@@ -26,7 +26,7 @@
  "rosters": [
   {
    "count": 4,
-   "id": "moon_ball",
+   "id": "test_ball",
    "params": {},
    "offset": [
     0,
@@ -38,7 +38,7 @@
  "version": 2,
  "seed": 42445,
  "camera": {
-  "mode": "low",
+  "mode": "follow",
   "path": [
    {
     "t": 0.0,
@@ -54,9 +54,9 @@
     ]
    },
    {
-    "t": 6.0,
+    "t": 5.0,
     "pos": [
-     4.1,
+     0.8,
      6.0,
      11.0
     ],
@@ -67,7 +67,7 @@
     ]
    },
    {
-    "t": 12.0,
+    "t": 10.0,
     "pos": [
      0,
      8.5,
@@ -80,21 +80,5 @@
     ]
    }
   ]
- },
- "overlays": [
-  {
-   "t": 0.5,
-   "duration": 2.5,
-   "text": "MOON BALLS vs HAMMER",
-   "size": 84,
-   "y": 300
-  },
-  {
-   "t": 7.2,
-   "duration": 2.0,
-   "text": "SMASH!",
-   "size": 120,
-   "y": 800
-  }
- ]
+ }
 }

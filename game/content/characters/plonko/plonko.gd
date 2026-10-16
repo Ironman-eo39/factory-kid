@@ -102,6 +102,12 @@ func _on_body_entered(body: Node) -> void:
 		return
 	_visual.set_meta("squashing", true)
 	var tw := _visual.create_tween()
-	tw.tween_property(_visual, "scale", Vector3(1.35, 0.45, 1.35), 0.08)
-	tw.tween_property(_visual, "scale", Vector3.ONE, 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	# squash pivots around the feet: scale Y down AND shift down so the
+	# head compresses under the hammer instead of poking through it
+	tw.set_parallel(true)
+	tw.tween_property(_visual, "scale", Vector3(1.4, 0.32, 1.4), 0.08)
+	tw.tween_property(_visual, "position:y", -0.75, 0.08)
+	tw.set_parallel(false)
+	tw.tween_property(_visual, "scale", Vector3.ONE, 0.6).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	tw.parallel().tween_property(_visual, "position:y", 0.0, 0.6).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	tw.tween_callback(_visual.remove_meta.bind("squashing"))

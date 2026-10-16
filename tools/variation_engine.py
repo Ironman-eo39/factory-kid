@@ -42,7 +42,7 @@ def vary(parent: dict, rng: random.Random, idx: int) -> tuple[dict, list[str]]:
     s["seed"] = rng.randint(0, 99999)
 
     # pick >=4 axes to vary
-    axes = ["roster", "destroyer", "camera", "beats", "overlays", "duration"]
+    axes = ["roster", "destroyer", "camera", "beats", "duration", "arena"]
     rng.shuffle(axes)
     for ax in axes[:4]:
         if ax == "roster" and s.get("rosters"):
@@ -91,27 +91,20 @@ def vary(parent: dict, rng: random.Random, idx: int) -> tuple[dict, list[str]]:
                 changed.append(f"beats: retimed + extra beat ({len(s['beats'])} total)")
             else:
                 changed.append(f"beats: retimed ({len(s['beats'])} beats)")
-        elif ax == "overlays":
-            s["_vary_overlays"] = True  # deferred: needs final roster/destroyer
-            changed.append("overlays: (text set after all axes)")
+
+        elif ax == "arena":
+            old_a = s.get("arena", {}).get("id", "day_arena")
+            new_a = "moon_arena" if old_a == "day_arena" else "day_arena"
+            s["arena"] = {"id": new_a, "params": {}}
+            changed.append(f"arena: {old_a} -> {new_a}")
         elif ax == "duration":
             old_d = s["duration"]
             s["duration"] = round(rng.choice([8.0, 10.0, 12.0, 15.0]), 1)
             if old_d == s["duration"]:
                 s["duration"] = 12.0 if old_d != 12.0 else 8.0
             changed.append(f"duration: {old_d}s -> {s['duration']}s")
-    if s.pop("_vary_overlays", False):
-        rid = s["rosters"][0]["id"] if s.get("rosters") else "plonko"
-        did = s.get("destroyer", {}).get("id", "test_hammer")
-        title, impact = _titles(rid, did)
-        s["overlays"] = [
-            {"t": 0.5, "duration": 2.5, "text": title, "size": 84, "y": 300},
-            {"t": round(s["duration"] * 0.6, 1), "duration": 2.0,
-             "text": impact, "size": 120, "y": 800},
-        ]
-        # fix the placeholder message
-        changed = [c if c != "overlays: (text set after all axes)"
-                   else f"overlays: -> '{title}' / '{impact}'" for c in changed]
+    # no overlays: kids don't read text (Urbish 2026-10-16)
+    s.pop("overlays", None)
     return s, changed
 
 def main():
