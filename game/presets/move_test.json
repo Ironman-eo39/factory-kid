@@ -1,0 +1,10 @@
+{
+  "id": "move_test",
+  "display_name": "Zone movement test (10s, no destroyer)",
+  "version": 2,
+  "seed": 123,
+  "duration": 10.0,
+  "arena": {"id": "day_arena", "params": {}},
+  "rosters": [{"id": "plonko", "count": 4, "params": {}, "offset": [0, 0.85, 0]}],
+  "camera": {"mode": "wide"}
+}
